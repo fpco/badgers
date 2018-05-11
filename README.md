@@ -1,3 +1,7 @@
+## Badgers
+
+This is a clone of [lobste.rs](https://lobste.rs) that is being used as a training and practice project for some folks that I (Chris Allen) am working with. You're welcome to clone it and kick it around but I won't be taking any PRs or issues from third parties for now until the folks I am helping are done with this project.
+
 ## Database Setup
 
 After installing Postgres, run:
