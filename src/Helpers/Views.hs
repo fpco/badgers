@@ -1,11 +1,13 @@
 module Helpers.Views where
 
-import Import
+import Import.NoFoundation
 
-baseLayout :: Widget -> Handler Html
-baseLayout content =
+baseLayout :: (Yesod site)
+           => Maybe (Entity User)
+           -> WidgetT site IO ()
+           -> HandlerT site IO Html
+baseLayout _ content =
   defaultLayout $ do
-    setTitle "Blah"
     [whamlet|
 ^{content}
 |]

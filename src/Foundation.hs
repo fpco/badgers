@@ -1,3 +1,5 @@
+{-# OPTIONS_GHC -fno-warn-orphans #-}
+
 module Foundation where
 
 import Import.NoFoundation
@@ -13,8 +15,8 @@ import Yesod.Auth.OpenId    (authOpenId, IdentifierType (Claimed))
 import Yesod.Default.Util   (addStaticContentExternal)
 import Yesod.Core.Types     (Logger)
 import qualified Yesod.Core.Unsafe as Unsafe
-import qualified Data.CaseInsensitive as CI
-import qualified Data.Text.Encoding as TE
+-- import qualified Data.CaseInsensitive as CI
+-- import qualified Data.Text.Encoding as TE
 
 import AppType
 import Routes
@@ -44,10 +46,6 @@ data MenuTypes
 
 -- | A convenient synonym for creating forms.
 type Form x = Html -> MForm (HandlerFor App) (FormResult x, Widget)
-
--- | A convenient synonym for database access functions.
-type DB a = forall (m :: * -> *).
-    (MonadIO m) => ReaderT SqlBackend m a
 
 -- Please see the documentation for the Yesod typeclass. There are a number
 -- of settings which can be configured by overriding methods here.

@@ -36,5 +36,22 @@ ghcid:
 dev-deps:
 	stack install ghcid
 
+reset-database: destroy-create-db migration fixtures
+
+reset-data: truncate-tables fixtures
+
+destroy-create-db:
+	-sudo -u postgres dropdb boutique_dev
+	sudo -u postgres createdb -O postgres boutique_dev
+
+migration: build
+	stack exec -- migration
+
+fixtures: build
+	stack exec -- fixtures
+
+truncate-tables: build
+	stack exec -- truncate
+
 .PHONY : build build-dirty run install ghci test test-ghci ghcid dev-deps
 
