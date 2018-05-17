@@ -8,8 +8,16 @@ After installing Postgres, run:
 
 ```
 createuser badgers --password badgers --superuser
-createdb badgers
-createdb badgers_test
+createdb -O badgers badgers_dev
+createdb -O badgers badgers_test
+```
+
+If you're on Linux you might have a `postgres` system user you need to impersonate in order to perform these actions, if that's the case then the commands are:
+
+```
+createuser badgers --password badgers --superuser
+createdb -O badgers badgers_dev
+createdb -O badgers badgers_test
 ```
 
 ## Haskell Setup

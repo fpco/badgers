@@ -40,9 +40,12 @@ reset-database: destroy-create-db migration fixtures
 
 reset-data: truncate-tables fixtures
 
+create-db-user:
+	sudo -u postgres createuser badgers --password badgers --superuser
+
 destroy-create-db:
 	-sudo -u postgres dropdb badgers_dev
-	sudo -u postgres createdb -O postgres badgers_dev
+	sudo -u postgres createdb -O badgers badgers_dev
 
 migration: build
 	stack exec -- migration
