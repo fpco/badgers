@@ -20,6 +20,8 @@ createdb -O badgers badgers_dev
 createdb -O badgers badgers_test
 ```
 
+There's also Makefile targets that make this easy.
+
 ## Haskell Setup
 
 1. If you haven't already, [install Stack](https://haskell-lang.org/get-started)
