@@ -41,8 +41,8 @@ reset-database: destroy-create-db migration fixtures
 reset-data: truncate-tables fixtures
 
 destroy-create-db:
-	-sudo -u postgres dropdb boutique_dev
-	sudo -u postgres createdb -O postgres boutique_dev
+	-sudo -u postgres dropdb badgers_dev
+	sudo -u postgres createdb -O postgres badgers_dev
 
 migration: build
 	stack exec -- migration

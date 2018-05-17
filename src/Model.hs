@@ -64,7 +64,7 @@ runMigrations = runMigration migrateAll
 
 devConn :: ConnectionString
 devConn =
-  "dbname=badgers-dev host=localhost user=postgres password=password port=5432"
+  "dbname=badgers_dev host=localhost user=postgres password=password port=5432"
 
 runDevDB :: DB a -> IO a
 runDevDB a =
