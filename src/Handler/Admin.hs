@@ -8,11 +8,16 @@ getAdminR :: UserId -> Handler Html
 getAdminR userId = do
   maybeUser <- runDB (getUserEntityFromId userId)
   case maybeUser of
-    Just user ->
+    Just (Entity _ (User email isAdmin)) ->
       baseLayout Nothing $ do
         setTitle "Home"
         [whamlet|
-        <h1>GOT #{show user}
+        <h1>#{email}
+          $if isAdmin
+            IS
+          $else
+            IS NOT
+          an Admin!
         <form method="POST" action="@{AdminR userId}">
           <input .button type="submit" value="Ascend">
         |]
