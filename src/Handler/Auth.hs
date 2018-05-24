@@ -111,7 +111,7 @@ postSignupR = do
           renderSignup widget
         -- If not, create a user
         Nothing -> do
-          (Entity dbUserKey _) <- runDB $ createUser email password
+          (Entity dbUserKey _) <- runDB $ createUser email password False
           setUserSession dbUserKey True
           redirect HomeR
     _ -> renderSignup widget

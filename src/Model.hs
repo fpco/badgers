@@ -24,6 +24,7 @@ import Model.Types as Export
 share [mkPersist sqlSettings, mkMigrate "migrateAll"] [persistLowerCase|
 User sql=users
   email Text
+  admin Bool default=TRUE
   UniqueUserEmail email
   deriving Eq Show
 
@@ -41,6 +42,13 @@ getUserPassword email = fmap listToMaybe $
   where_ (user ^. UserEmail ==. val email)
   return (user, pass)
 
+getUserEntityFromId :: UserId -> DB (Maybe (Entity User))
+getUserEntityFromId userId = fmap listToMaybe $
+  select $
+  from $ \user -> do
+  where_ (user ^. UserId ==. val userId)
+  return user
+
 getUserEntity :: Text -> DB (Maybe (Entity User))
 getUserEntity email = fmap listToMaybe $
   select $
@@ -48,10 +56,10 @@ getUserEntity email = fmap listToMaybe $
   where_ (user ^. UserEmail ==. val email)
   return user
 
-createUser :: Text -> Text -> DB (Entity User)
-createUser email pass = do
-  let newUser = User email
-  userId <- insert $ newUser
+createUser :: Text -> Text -> Bool -> DB (Entity User)
+createUser email pass isAdmin = do
+  let newUser = User email isAdmin
+  userId <- insert newUser
   hash <- liftIO $ hashPassword pass
   _ <- insert $ Password hash userId
   return (Entity userId newUser)
