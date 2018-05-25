@@ -6,6 +6,9 @@ stack = $(stack_yaml) stack
 build:
 	$(stack) build $(package)
 
+build-fast:
+	$(stack) build -j2 --fast --no-terminal
+
 build-dirty:
 	$(stack) build --force-dirty $(package)
 
@@ -19,7 +22,7 @@ install:
 	$(stack) install
 
 ghci:
-	$(stack) ghci $(package):lib
+	$(stack) ghci --ghci-options="-fobject-code" $(package):lib
 
 test:
 	$(stack) test $(package)

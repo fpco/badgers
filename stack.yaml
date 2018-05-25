@@ -4,10 +4,6 @@ packages:
 - .
 - location:
     git: git@github.com:bitemyapp/esqueleto.git
+    # git: https://github.com/bitemyapp/esqueleto.git
     commit: 632f4408df05501b02d3e2f951bfdd335ea515ba
   extra-dep: true
-
-# extra-deps:
-#   - conduit-1.2.13.1
-#   - esqueleto-2.5.3
-#   - persistent-2.7.3.1
