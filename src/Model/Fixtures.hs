@@ -21,14 +21,14 @@ alexeyEmail, alexeyPassword :: Text
 alexeyEmail = "alexey@lol.com"
 alexeyPassword = "alexeyPass"
 
-makeAccount :: Text -> Text -> DB (Entity User)
-makeAccount email pass = do
-  userEnt <- createUser email pass
+makeAccount :: Text -> Text -> Bool -> DB (Entity User)
+makeAccount email pass isAdmin = do
+  userEnt <- createUser email pass isAdmin
   return userEnt
 
 makeAccounts :: DB [Entity User]
-makeAccounts = sequenceA [ makeAccount chrisEmail chrisPassword
-                         , makeAccount alexeyEmail alexeyPassword ]
+makeAccounts = sequenceA [ makeAccount chrisEmail chrisPassword True
+                         , makeAccount alexeyEmail alexeyPassword False ]
 
 {-# INLINABLE unsafeIdx #-}
 unsafeIdx :: (MonoFoldable c) => c -> Integer -> Element c
