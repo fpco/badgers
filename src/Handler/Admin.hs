@@ -7,8 +7,8 @@ import Helpers.Views
 
 getAdminR :: UserId -> Handler Html
 getAdminR userId = do
-  (Entity _ (User{..})) <-
-    runDBOr404 (getUserEntityFromId userId)
+  User{..} <-
+    runDBOr404 (get userId)
   let isOrIsNot :: Text
       isOrIsNot =
         if userAdmin

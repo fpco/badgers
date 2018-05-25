@@ -13,10 +13,11 @@ module Model
   , module Export
   ) where
 
-import ClassyPrelude.Yesod hiding ((==.), hash, on)
+import ClassyPrelude.Yesod hiding ((==.), hash, on, selectFirst)
 
 import Control.Monad.Logger hiding (LoggingT, runLoggingT)
-import Database.Esqueleto
+import Database.Esqueleto hiding (selectFirst)
+import Database.Esqueleto.Internal.Sql
 import Database.Persist.Postgresql (ConnectionString, withPostgresqlPool)
 import Model.BCrypt as Export
 import Model.Types as Export
@@ -37,33 +38,41 @@ Password sql=passwords
   UniquePasswordUser user
 |]
 
+selectFirst :: ( SqlSelect a r
+               , MonadIO m
+               )
+            => SqlQuery a
+            -> SqlReadT m (Maybe r)
+selectFirst query = do
+  res <- select query
+  case res of
+    (x : _) -> return (Just x)
+    _ -> return Nothing
+
 getUserPassword :: Text -> DB (Maybe (Entity User, Entity Password))
-getUserPassword email = fmap listToMaybe $
-  select $
+getUserPassword email =
+  selectFirst $
   from $ \(user `InnerJoin` pass) -> do
   on (user ^. UserId ==. pass ^. PasswordUser)
   where_ (user ^. UserEmail ==. val email)
   return (user, pass)
 
-getUserEntityFromId :: UserId -> DB (Maybe (Entity User))
-getUserEntityFromId userId = fmap listToMaybe $
-  select $
-  from $ \user -> do
-  where_ (user ^. UserId ==. val userId)
-  return user
+getUserByEmail :: Text -> DB (Maybe (Entity User))
+getUserByEmail email =
+  getUserBy UserEmail email
 
-getUserEntityFromUsername :: Text -> DB (Maybe (Entity User))
-getUserEntityFromUsername username = fmap listToMaybe $
-  select $
-  from $ \user -> do
-  where_ (user ^. UserUsername ==. val username)
-  return user
+getUserByUsername :: Text -> DB (Maybe (Entity User))
+getUserByUsername username =
+  getUserBy UserUsername username
 
-getUserEntity :: Text -> DB (Maybe (Entity User))
-getUserEntity email = fmap listToMaybe $
-  select $
+getUserBy :: (PersistField a)
+          => EntityField User a
+          -> a
+          -> DB (Maybe (Entity User))
+getUserBy field value =
+  selectFirst $
   from $ \user -> do
-  where_ (user ^. UserEmail ==. val email)
+  where_ (user ^. field ==. val value)
   return user
 
 createUser :: Text -> Text -> Text -> Bool -> DB (Entity User)

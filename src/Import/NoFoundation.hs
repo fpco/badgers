@@ -3,9 +3,9 @@ module Import.NoFoundation
     ( module Import
     ) where
 
-import ClassyPrelude.Yesod   as Import
+import ClassyPrelude.Yesod   as Import hiding (selectFirst)
 import Control.Error.Safe    as Import (justZ)
-import Database.Persist.Sql  as Import
+import Database.Persist.Sql  as Import hiding (selectFirst)
 import Model                 as Import
 import Settings              as Import
 import Settings.StaticFiles  as Import

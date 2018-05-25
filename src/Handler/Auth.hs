@@ -112,7 +112,7 @@ postSignupR = do
   case result of
     FormSuccess SignupForm{..} -> do
       -- Check to see if a user with this email already exists
-      maybeUP <- runDB (getUserEntity signupEmail)
+      maybeUP <- runDB (getUserByEmail signupEmail)
       case maybeUP of
         -- If it does, render the form again (?)
         (Just _) -> do
