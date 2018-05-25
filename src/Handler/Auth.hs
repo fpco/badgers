@@ -2,15 +2,11 @@ module Handler.Auth where
 
 import Import
 
+import Handler.Auth.Forms
+import Handler.Auth.Views
 import Handler.Sessions
 import Helpers.Forms
 import Helpers.Views
-
-loginForm :: Form (Text, Text)
-loginForm =
-  renderDivs $
-  (,) <$> areq textField (named "email" (placeheld "Email")) Nothing
-      <*> areq passwordField (named "password" (placeheld "Password")) Nothing
 
 redirectIfLoggedIn :: (RedirectUrl App r) => r -> Handler ()
 redirectIfLoggedIn r = do
@@ -25,22 +21,6 @@ requireUser = do
   case maybeUser of
     Nothing -> redirect LoginR
     (Just user) -> return user
-
-renderLogin :: Widget -> Handler Html
-renderLogin widget = do
-  baseLayout Nothing $ do
-    setTitle "Login"
-    [whamlet|
-<div .row #content>
-  <div .medium-8 .columns>
-    <hr>
-<div .row #content>
-  <div .medium-8 .columns>
-    <h3>Login to your account!
-    <form method="POST" action="@{LoginR}">
-      ^{widget}
-      <input .button type="submit" value="Submit">
-|]
 
 getLoginR :: Handler Html
 getLoginR = do
