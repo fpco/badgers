@@ -69,11 +69,19 @@ postLoginR = do
     _ -> renderLogin widget
 
 
-signupForm :: Form (Text, Text)
-signupForm = loginForm
-  -- renderDivs $
-  -- (,) <$> areq textField (named "email" (placeheld "Email")) Nothing
-  --     <*> areq passwordField (named "password" (placeheld "Password")) Nothing
+data SignupForm = SignupForm {
+    signupEmail :: Text
+  , signupUsername :: Text
+  , signupPassword :: Text
+  }
+
+signupForm :: Form SignupForm
+signupForm =
+  renderDivs $
+    SignupForm
+      <$> areq textField (named "email" (placeheld "Email: ")) Nothing
+      <*> areq textField (named "username" (placeheld "Username: ")) Nothing
+      <*> areq passwordField (named "password" (placeheld "Password: ")) Nothing
 
 renderSignup :: Widget -> Handler Html
 renderSignup widget = do
@@ -102,16 +110,17 @@ postSignupR = do
   redirectIfLoggedIn HomeR
   ((result, widget), _) <- runFormPost signupForm
   case result of
-    FormSuccess (email, password) -> do
+    FormSuccess SignupForm{..} -> do
       -- Check to see if a user with this email already exists
-      maybeUP <- runDB (getUserEntity email)
+      maybeUP <- runDB (getUserEntity signupEmail)
       case maybeUP of
         -- If it does, render the form again (?)
         (Just _) -> do
           renderSignup widget
         -- If not, create a user
         Nothing -> do
-          (Entity dbUserKey _) <- runDB $ createUser email password False
+          (Entity dbUserKey _) <-
+            runDB $ createUser signupEmail signupPassword signupUsername False
           setUserSession dbUserKey True
           redirect HomeR
     _ -> renderSignup widget

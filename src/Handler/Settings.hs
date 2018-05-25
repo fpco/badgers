@@ -42,10 +42,10 @@ getSettingsR = do
 postSettingsR :: Handler Html
 postSettingsR = do
   (Entity userId _) <- requireUser
-  ((result, widget), _) <- runFormPost loginForm
+  ((result, widget), _) <- runFormPost settingsForm
   case result of
     FormSuccess about -> do
-      runDB $ update userId [UserAbout =. about]
+      runDB $ update userId [UserAbout =. Just about]
       renderSettings widget
     _ -> renderSettings widget
 

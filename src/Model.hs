@@ -25,7 +25,7 @@ share [mkPersist sqlSettings, mkMigrate "migrateAll"] [persistLowerCase|
 User sql=users
   email Text
   username Text
-  about Text
+  about Text Maybe
   admin Bool default=TRUE
   UniqueUserEmail email
   UniqueUserUsername username
@@ -66,9 +66,9 @@ getUserEntity email = fmap listToMaybe $
   where_ (user ^. UserEmail ==. val email)
   return user
 
-createUser :: Text -> Text -> Bool -> DB (Entity User)
-createUser email pass isAdmin = do
-  let newUser = User email isAdmin
+createUser :: Text -> Text -> Text -> Bool -> DB (Entity User)
+createUser email pass username isAdmin = do
+  let newUser = User email username Nothing isAdmin
   userId <- insert newUser
   hash <- liftIO $ hashPassword pass
   _ <- insert $ Password hash userId

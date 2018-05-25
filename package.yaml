@@ -81,6 +81,9 @@ dependencies:
 # defined below is just a thin wrapper.
 library:
   source-dirs: src
+  exposed-modules:
+    - Application
+    - Import
   when:
   - condition: (flag(dev)) || (flag(library-only))
     then:

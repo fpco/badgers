@@ -4,8 +4,8 @@ import Import
 
 import Helpers.Views
 
-getUserR :: UserUsername -> Handler Html
-getAdminR (UserUsername username) = do
+getUserR :: Text -> Handler Html
+getUserR username = do
   maybeUser <- runDB (getUserEntityFromUsername username)
   case maybeUser of
     Just (Entity _ user) ->
@@ -13,7 +13,7 @@ getAdminR (UserUsername username) = do
         setTitle "Home"
         [whamlet|
         <h1>#{userUsername user}
-        <p>#{userAbout user}
+        <p>#{fromMaybe "" $ userAbout user}
         |]
     Nothing ->
       baseLayout Nothing $ do
