@@ -10,7 +10,9 @@ mkYesodData "App" [parseRoutes|
 / HomeR GET
 
 -- Users
-/users/#UserId/admin AdminR GET POST
+/u/#UserUsername/admin AdminR GET POST
+/u/#UserUsername UserR GET
+/settings SettingsR GET POST
 
 -- Auth
 /login      LoginR   GET POST
