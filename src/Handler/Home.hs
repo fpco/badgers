@@ -26,11 +26,6 @@ import Model
 --         storyTwitterId :: !Text,
 --         storyUserIsAuthor :: !Bool}
 
--- defaultUser :: User
--- defaultUser =
---   let a = undefined
---   in User{..}
-
 defaultStory :: Story
 defaultStory =
   let storyCreatedAt = UTCTime (ModifiedJulianDay 10000) 0

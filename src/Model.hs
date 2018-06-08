@@ -28,17 +28,17 @@ share [mkPersist sqlSettings, mkMigrate "migrateAll"] [persistLowerCase|
 User sql=users
   username Text sqltype=varchar(50)
   email Text sqltype=varchar(100)
-  passwordDigest Text sqltype=varchar(75)
+  passwordDigest BCrypt
   createdAt UTCTime
   isAdmin Bool default=FALSE
-  passwordResetToken Text sqltype=varchar(75)
-  sessionToken Text sqltype=varchar(75) default=""
+  passwordResetToken Text Maybe sqltype=varchar(75)
+  sessionToken Text Maybe sqltype=varchar(75) default=""
   about Text Maybe sqltype=varchar(16777215)
   invitedByUserId UserId Maybe
   isModerator Bool default=FALSE
   pushoverMentions Bool default=FALSE
-  rssToken Text sqltype=varchar(75)
-  mailingListToken Text sqltype=varchar(75)
+  rssToken Text Maybe sqltype=varchar(75)
+  mailingListToken Text Maybe sqltype=varchar(75)
   mailingListMode Int64 default=0
   karma Int64 default=0
   bannedAt UTCTime Maybe
@@ -51,10 +51,10 @@ User sql=users
   settings Text
 
   UniqueUserUsername username
-  UniqueMailingListToken mailingListToken
-  UniquePasswordResetToken passwordResetToken
-  UniqueRssToken rssToken
-  UniqueSessionToken sessionToken
+  UniqueMailingListToken mailingListToken !force
+  UniquePasswordResetToken passwordResetToken !force
+  UniqueRssToken rssToken !force
+  UniqueSessionToken sessionToken !force
   deriving Eq Show
 
 Story sql=stories
@@ -105,39 +105,60 @@ selectFirst query = do
     (x : _) -> return (Just x)
     _ -> return Nothing
 
--- getUserPassword :: Text -> DB (Maybe (Entity User)
--- getUserPassword email =
---   selectFirst $
---   from $ \(user `InnerJoin` pass) -> do
---   on (user ^. UserId ==. pass ^. PasswordUser)
---   where_ (user ^. UserEmail ==. val email)
---   return (user, pass)
+getUserByEmail :: Text -> DB (Maybe (Entity User))
+getUserByEmail email =
+  getUserBy UserEmail email
 
--- getUserByEmail :: Text -> DB (Maybe (Entity User))
--- getUserByEmail email =
---   getUserBy UserEmail email
+getUserByUsername :: Text -> DB (Maybe (Entity User))
+getUserByUsername username =
+  getUserBy UserUsername username
 
--- getUserByUsername :: Text -> DB (Maybe (Entity User))
--- getUserByUsername username =
---   getUserBy UserUsername username
+getUserBy :: (PersistField a)
+          => EntityField User a
+          -> a
+          -> DB (Maybe (Entity User))
+getUserBy field value =
+  selectFirst $
+  from $ \user -> do
+  where_ (user ^. field ==. val value)
+  return user
 
--- getUserBy :: (PersistField a)
---           => EntityField User a
---           -> a
---           -> DB (Maybe (Entity User))
--- getUserBy field value =
---   selectFirst $
---   from $ \user -> do
---   where_ (user ^. field ==. val value)
---   return user
+defaultCreateUser :: Text
+                  -> Text
+                  -> BCrypt
+                  -> Maybe UserId
+                  -> IO User
+defaultCreateUser
+  userUsername userEmail
+  userPasswordDigest userInvitedByUserId = do
+  t <- getCurrentTime
+  let userCreatedAt = t
+      userIsAdmin = False
+      userPasswordResetToken = Nothing
+      userSessionToken = Nothing
+      userAbout = Nothing
+      userIsModerator = False
+      userPushoverMentions = False
+      userRssToken = Nothing
+      userMailingListToken = Nothing
+      userMailingListMode = 0
+      userKarma = 0
+      userBannedAt = Nothing
+      userBannedByUserId = Nothing
+      userBannedReason = Nothing
+      userDeletedAt = Nothing
+      userDisabledInviteAt = Nothing
+      userDisabledInviteByUserId = Nothing
+      userDisabledInviteReason = Nothing
+      userSettings = ""
+  return $ User{..}
 
--- createUser :: Text -> Text -> Text -> Bool -> DB (Entity User)
--- createUser email pass username isAdmin = do
---   let newUser = User email username Nothing isAdmin
---   userId <- insert newUser
---   hash <- liftIO $ hashPassword pass
---   _ <- insert $ Password hash userId
---   return (Entity userId newUser)
+createUser :: Text -> Text -> Text -> Bool -> DB (Entity User)
+createUser email pass username isAdmin = do
+  hash <- liftIO $ hashPassword pass
+  newUser <- liftIO $ defaultCreateUser username email hash Nothing
+  userId <- insert newUser
+  return (Entity userId newUser)
 
 dumpMigration :: DB ()
 dumpMigration = printMigration migrateAll
