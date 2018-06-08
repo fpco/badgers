@@ -22,7 +22,7 @@ install:
 	$(stack) install
 
 ghci:
-	$(stack) ghci --ghci-options="-fobject-code" $(package):lib
+	$(stack) ghci $(package):lib --ghci-options='-fobject-code -j4 +RTS -A128m'
 
 test:
 	$(stack) test $(package)

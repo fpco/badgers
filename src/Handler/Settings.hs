@@ -2,6 +2,7 @@ module Handler.Settings where
 
 import Import
 
+import Handler.Auth
 import Handler.Sessions
 import Helpers.Forms
 import Helpers.Views
@@ -11,17 +12,10 @@ settingsForm :: Form Text
 settingsForm =
   renderDivs $ areq textField (named "about" (placeheld "About")) Nothing
 
-requireUser :: Handler (Entity User)
-requireUser = do
-  maybeUser <- getUser
-  case maybeUser of
-    Nothing -> redirect LoginR
-    (Just user) -> return user
-
 renderSettings :: Widget -> Handler Html
 renderSettings widget = do
   baseLayout Nothing $ do
-    setTitle "Login"
+    setTitle "Settings"
     [whamlet|
 <div .row #content>
   <div .medium-8 .columns>

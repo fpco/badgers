@@ -11,7 +11,7 @@ getAdminR userId = do
     runDBOr404 (get userId)
   let isOrIsNot :: Text
       isOrIsNot =
-        if userAdmin
+        if userIsAdmin
         then "IS"
         else "IS NOT"
       header =
@@ -26,5 +26,5 @@ getAdminR userId = do
 
 postAdminR :: UserId -> Handler Html
 postAdminR userId = do
-  runDB $ update userId [UserAdmin =. True]
+  runDB $ update userId [UserIsAdmin =. True]
   redirect $ AdminR userId
