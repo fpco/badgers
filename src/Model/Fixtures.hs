@@ -4,12 +4,21 @@ module Model.Fixtures where
 
 import Import
 
+import qualified Test.RandomStrings as RS
+
+import Prelude ((!!))
+
 data UserFixtures =
   UserFixtures { allUsersF :: [Entity User] }
   deriving (Eq, Show)
 
+data StoryFixtures =
+  StoryFixtures { allStoriesF :: [Entity Story] }
+  deriving (Eq, Show)
+
 data Fixtures =
   Fixtures { userF     :: UserFixtures
+           , storyF    :: StoryFixtures
            }
   deriving (Eq, Show)
 
@@ -31,20 +40,47 @@ makeAccounts =
   sequenceA [ makeAccount chrisEmail chrisPassword "chris" True
             , makeAccount alexeyEmail alexeyPassword "alexey" False ]
 
-{-# INLINABLE unsafeIdx #-}
-unsafeIdx :: (MonoFoldable c) => c -> Integer -> Element c
-unsafeIdx xs n
-  | n < 0     = error "negative index"
-  | otherwise = foldr (\x r k -> case k of
-                                   0 -> x
-                                   _ -> r (k-1)) (error ("index too large: " ++ show n))  xs n
+defaultCreateStory :: UserId -> Text -> IO Story
+defaultCreateStory userId storyTitle = do
+  shortId <- RS.randomString (RS.onlyAlpha RS.randomASCII) 6
+  let storyCreatedAt = UTCTime (ModifiedJulianDay 10000) 0
+      storyUserId = userId
+      storyUrl = "http://www.google.com"
+      storyDescription = "My story description"
+      storyShortId = pack shortId -- "ABC123"
+      storyIsExpired = False
+      storyUpvotes = 10
+      storyDownvotes = 2
+      storyIsModerated = False
+      storyHotness = 10
+      storyMarkeddownDescription = "My story description"
+      storyStoryCache = ""
+      storyCommentsCount = 4
+      storyMergedStoryId = Nothing
+      storyUnavailableAt = Nothing
+      storyTwitterId = "bitemyapp"
+      storyUserIsAuthor = False
+  return $ Story{..}
+
+makeStories :: UserId -> DB [Entity Story]
+makeStories userId = do
+  let storyTitles = [ "Lessons learned Working From Home"
+                    , "Static Sites vs CMS"
+                    , "First Impressions of the Rust Programming Language"
+                    ]
+  stories <- liftIO $ traverse (defaultCreateStory userId) storyTitles
+  traverse insertEntity stories
 
 insertFixtures :: DB Fixtures
 insertFixtures = do
+  liftIO $ putStrLn "before makeAccounts"
   allUsersF <- makeAccounts
-  -- let chris = unsafeIdx allUsersF 0
-  --     alexey = unsafeIdx allUsersF 1
+  liftIO $ putStrLn "after makeAccounts"
+  let userId = entityKey (allUsersF !! 0)
+  allStoriesF <- makeStories userId
+  liftIO $ putStrLn "after makeStories"
   let userF = UserFixtures {..}
+      storyF = StoryFixtures {..}
   return Fixtures {..}
 
 

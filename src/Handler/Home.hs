@@ -1,59 +1,18 @@
 module Handler.Home where
 
-import Import
+import Import hiding ((==.), on)
 
+import qualified Data.Map as Map
 import Data.Time.Clock
+import Database.Esqueleto
 
 import Helpers.Views
 import Model
 
--- Story { storyCreatedAt :: !UTCTime,
---         storyUserId :: !Key User,
---         storyUrl :: !Text,
---         storyTitle :: !Text,
---         storyDescription :: !Text,
---         storyShortId :: !Text,
---         storyIsExpired :: !Bool,
---         storyUpvotes :: !Int64,
---         storyDownvotes :: !Int64,
---         storyIsModerated :: !Bool,
---         storyHotness :: !Hotness,
---         storyMarkeddownDescription :: !Text,
---         storyStoryCache :: !Text,
---         storyCommentsCount :: !Int64,
---         storyMergedStoryId :: !Maybe (Key Story),
---         storyUnavailableAt :: !Maybe UTCTime,
---         storyTwitterId :: !Text,
---         storyUserIsAuthor :: !Bool}
-
-defaultStory :: Story
-defaultStory =
-  let storyCreatedAt = UTCTime (ModifiedJulianDay 10000) 0
-      storyUserId = toSqlKey 0
-      storyUrl = "http://www.google.com"
-      storyTitle = "My Story Title"
-      storyDescription = "My story description"
-      storyShortId = "ABC123"
-      storyIsExpired = False
-      storyUpvotes = 10
-      storyDownvotes = 2
-      storyIsModerated = False
-      storyHotness = 10
-      storyMarkeddownDescription = "My story description"
-      storyStoryCache = ""
-      storyCommentsCount = 4
-      storyMergedStoryId = Nothing
-      storyUnavailableAt = Nothing
-      storyTwitterId = "bitemyapp"
-      storyUserIsAuthor = False
-  in Story{..}
-
-mockStoryValues :: [Story]
-mockStoryValues = -- fmap (defaultUser,)
-  [ defaultStory { storyTitle = "Lessons learned Working From Home" }
-  , defaultStory { storyTitle = "Static Sites vs CMS" }
-  , defaultStory { storyTitle = "First Impressions of the Rust Programming Language" }
-  ]
+-- [Tag] -> Int64
+-- [Vote]
+-- [VoteStory]
+-- [VoteComment]
 
 renderStoryItem :: Story -> Widget
 renderStoryItem Story{..} =
@@ -102,20 +61,90 @@ renderStoryItem Story{..} =
           |
 
           <a href="/s/hujw8d/lessons_learned_working_from_home">
-            13
-                            comments
+            13 comments
 
   <div .mobile_comments style="display: none;">
     <a href="/s/hujw8d/lessons_learned_working_from_home">
       13
 |]
 
+getTagsForStory :: StoryId -> DB [Entity Tag]
+getTagsForStory storyId =
+  select $
+  from $
+    \ (tagging `InnerJoin` tag) -> do
+      on (tag ^. TagId ==. tagging ^. TaggingTag)
+      where_ (tagging ^. TaggingStory ==. val storyId)
+      return tag
+
+getStoriesThatHaveTags :: DB [(Entity Story, Entity Tag)]
+getStoriesThatHaveTags =
+  select $
+  from $
+    \ (story `InnerJoin` tagging `InnerJoin` tag) -> do
+      on (tag ^. TagId ==. tagging ^. TaggingTag)
+      on (tagging ^. TaggingStory ==. story ^. StoryId)
+      return (story, tag)
+
+-- [(Entity Story, [Entity Tag])]
+
+-- data StoryAndTags = StoryAndTags {
+--     satStory :: Entity Story
+--   , satTags :: [Entity Tag]
+--   }
+--   deriving Show
+
+-- data StoryAndTags' f = StoryAndTags' {
+--     satStory :: f Story
+--   , satTags :: [f Tag]
+--   }
+--   deriving Show
+
+-- type StoryAndTags = StoryAndTags' Entity
+
+-- type StoryAndTagsNonDB = StoryAndTags' Identity
+
+-- getStoriesAndTags :: DB [(Entity Story, Entity Tag)]
+-- getStoriesAndTags :: DB [(Entity Story, Maybe (Entity Tag))]
+
+-- getStoriesAndTags :: DB [(Entity Story, [Entity Tag])]
+type StoriesMap = Map StoryId (Entity Story, [Entity Tag])
+
+getStoriesAndTags :: DB StoriesMap
+getStoriesAndTags = do
+  sat <- storiesAndTags
+  return $ foldl' f Map.empty sat
+  where storiesAndTags =
+          select $
+          from $
+            \ (story `LeftOuterJoin` tagging `LeftOuterJoin` tag) -> do
+              on (tag ?. TagId ==. tagging ?. TaggingTag)
+              on (tagging ?. TaggingStory ==. just (story ^. StoryId))
+              return (story, tag)
+
+        maybeToList :: Maybe a -> [a]
+        maybeToList Nothing = []
+        maybeToList (Just a) = [a]
+
+        f :: StoriesMap -> (Entity Story, Maybe (Entity Tag)) -> StoriesMap
+        f storiesMap (story, maybeEntityTag) =
+          let key = entityKey story
+              newTag = maybeToList maybeEntityTag
+              adjuster (_, xs) =
+                (story, newTag ++ xs)
+          in case Map.lookup key storiesMap of
+               Nothing ->
+                 Map.insert key (story, newTag) storiesMap
+               (Just _) ->
+                 Map.adjust adjuster key storiesMap
+
 getHomeR :: Handler Html
-getHomeR =
+getHomeR = do
+  databaseStories <- runDB $ getStoriesAndTags
   baseLayout Nothing $ do
     setTitle "Home"
     [whamlet|
 <ol .stories .list>
-  $forall story <- mockStoryValues
+  $forall (Entity _ story, _) <- databaseStories
     ^{renderStoryItem story}
 |]

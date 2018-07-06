@@ -21,7 +21,6 @@ import Database.Esqueleto.Internal.Sql
 import Database.Persist.Postgresql (ConnectionString, withPostgresqlPool)
 import Model.BCrypt as Export
 import Model.Types as Export
-
 --     t.index ["mailing_list_mode"], name: "mailing_list_enabled"
 
 share [mkPersist sqlSettings, mkMigrate "migrateAll"] [persistLowerCase|
@@ -32,8 +31,8 @@ User sql=users
   createdAt UTCTime
   isAdmin Bool default=FALSE
   passwordResetToken Text Maybe sqltype=varchar(75)
-  sessionToken Text Maybe sqltype=varchar(75) default=""
-  about Text Maybe sqltype=varchar(16777215)
+  sessionToken Text Maybe sqltype=varchar(75)
+  about Text Maybe sqltype=varchar(10485760)
   invitedByUserId UserId Maybe
   isModerator Bool default=FALSE
   pushoverMentions Bool default=FALSE
@@ -57,42 +56,62 @@ User sql=users
   UniqueSessionToken sessionToken !force
   deriving Eq Show
 
+-- 10485760 was previously 16777215
 Story sql=stories
   createdAt UTCTime
   userId UserId
   url Text sqltype=varchar(250)
   title Text sqltype=varchar(150)
-  description Text sqltype=varchar(16777215)
+  description Text sqltype=varchar(10485760)
   shortId Text sqltype=varchar(6)
   isExpired Bool default=FALSE
   upvotes Int64 default=0
   downvotes Int64 default=0
   isModerated Bool default=FALSE
   hotness Hotness
-  markeddownDescription Text sqltype=varchar(16777215)
-  storyCache Text sqltype=varchar(16777215)
+  markeddownDescription Text sqltype=varchar(10485760)
+  storyCache Text sqltype=varchar(10485760)
   commentsCount Int64 default=0
   mergedStoryId StoryId Maybe
   unavailableAt UTCTime Maybe
   twitterId Text sqltype=varchar(20)
   userIsAuthor Bool default=FALSE
-
   UniqueShortId shortId
-  deriving Eq Show
-|]
+  deriving Eq Ord Show
 
---     t.index ["story_cache"], name: "index_stories_on_story_cache", type: :fulltext
---     t.index ["title"], name: "index_stories_on_title", type: :fulltext
---     t.index ["twitter_id"], name: "index_stories_on_twitter_id"
---     t.index ["url"], name: "url", length: { url: 191 }  
---     t.index ["user_id"], name: "index_stories_on_user_id"
---     t.index ["created_at"], name: "index_stories_on_created_at"
---     t.index ["description"], name: "index_stories_on_description", type: :fulltext
---     t.index ["hotness"], name: "hotness_idx"
---     t.index ["is_expired", "is_moderated"], name: "is_idxes"
---     t.index ["is_expired"], name: "index_stories_on_is_expired"
---     t.index ["is_moderated"], name: "index_stories_on_is_moderated"
---     t.index ["merged_story_id"], name: "index_stories_on_merged_story_id"
+Tag sql=tags
+  tag Text sqltype=varchar(25)
+  description Text Maybe sqltype=varchar(100)
+  privileged Bool default=FALSE
+  isMedia Bool default=FALSE
+  inactive Bool default=FALSE
+  hotnessMod Double default=0.0
+  UniqueTagName tag
+  deriving Show
+
+Tagging sql=taggings
+  story StoryId
+  tag TagId
+  UniqueStoryTagPair story tag
+  deriving Show
+
+Vote sql=votes
+  user UserId
+  story StoryId
+  vote Int64
+  reason Text -- enum?
+  updatedAt UTCTime
+  deriving Show
+|]
+--   comment CommentId Maybe
+
+--     t.index ["comment_id"], name: "index_votes_on_comment_id"
+--     t.index ["user_id", "comment_id"], name: "user_id_comment_id"
+--     t.index ["user_id", "story_id"], name: "user_id_story_id"
+
+-- UniqueCommentVote comment
+-- UniqueUserCommentVote user comment
+-- UniqueUserStoryVote user story
 
 selectFirst :: ( SqlSelect a r
                , MonadIO m
@@ -154,7 +173,7 @@ defaultCreateUser
   return $ User{..}
 
 createUser :: Text -> Text -> Text -> Bool -> DB (Entity User)
-createUser email pass username isAdmin = do
+createUser email pass username _ = do
   hash <- liftIO $ hashPassword pass
   newUser <- liftIO $ defaultCreateUser username email hash Nothing
   userId <- insert newUser
