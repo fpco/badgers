@@ -10,11 +10,6 @@ import Data.Maybe (maybeToList)
 import Helpers.Views
 import Model
 
--- [Tag] -> Int64
--- [Vote]
--- [VoteStory]
--- [VoteComment]
-
 renderTag :: Tag -> Widget
 renderTag Tag{..} =
   [whamlet|
@@ -94,28 +89,6 @@ getStoriesThatHaveTags =
       on (tagging ^. TaggingStory ==. story ^. StoryId)
       return (story, tag)
 
--- [(Entity Story, [Entity Tag])]
-
--- data StoryAndTags = StoryAndTags {
---     satStory :: Entity Story
---   , satTags :: [Entity Tag]
---   }
---   deriving Show
-
--- data StoryAndTags' f = StoryAndTags' {
---     satStory :: f Story
---   , satTags :: [f Tag]
---   }
---   deriving Show
-
--- type StoryAndTags = StoryAndTags' Entity
-
--- type StoryAndTagsNonDB = StoryAndTags' Identity
-
--- getStoriesAndTags :: DB [(Entity Story, Entity Tag)]
--- getStoriesAndTags :: DB [(Entity Story, Maybe (Entity Tag))]
-
--- getStoriesAndTags :: DB [(Entity Story, [Entity Tag])]
 type StoriesMap = Map StoryId (Entity Story, [Entity Tag])
 
 getStoriesAndTags :: DB StoriesMap
