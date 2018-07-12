@@ -5,6 +5,7 @@ import Import hiding ((==.), on)
 import qualified Data.Map as Map
 import Data.Time.Clock
 import Database.Esqueleto
+import Data.Maybe (maybeToList)
 
 import Helpers.Views
 import Model
@@ -14,8 +15,15 @@ import Model
 -- [VoteStory]
 -- [VoteComment]
 
-renderStoryItem :: Story -> Widget
-renderStoryItem Story{..} =
+renderTag :: Tag -> Widget
+renderTag Tag{..} =
+  [whamlet|
+<a .tag .tag_practices href="/t/#{tagTag}" title="Development and business practices">
+  #{tagTag}
+|]
+
+renderStoryItem :: Story -> [Entity Tag] -> Widget
+renderStoryItem Story{..} tags =
   [whamlet|
 <li .story data-shortid="hujw8d" #story_hujw8d>
   <div .story_liner>
@@ -28,8 +36,8 @@ renderStoryItem Story{..} =
         <a href="https://sgoel.org/posts/lessons-learned-working-from-home/">
           #{storyTitle}
       <span .tags>
-        <a .tag .tag_practices href="/t/practices" title="Development and business practices">
-          practices
+        $forall (Entity _ tag) <- tags
+          ^{renderTag tag}
       <a .domain href="/search?order=newest&amp;q=domain:sgoel.org">
         sgoel.org
       <div .byline>
@@ -41,16 +49,16 @@ renderStoryItem Story{..} =
           siddhantgoel
         <span title="2018-06-08 03:28:44 -0500">
           13 hours ago
-        | 
+        |
         <a .suggester href="/stories/hujw8d/suggest">
           suggest
-        | 
+        |
         <a .flagger>
           flag
-        | 
+        |
         <a .hider href="/stories/hujw8d/hide">
           hide
-        | 
+        |
         <a .saver href="/stories/hujw8d/save">
           save
         |
@@ -114,7 +122,9 @@ getStoriesAndTags :: DB StoriesMap
 getStoriesAndTags = do
   sat <- storiesAndTags
   return $ foldl' f Map.empty sat
-  where storiesAndTags =
+  where
+    storiesAndTags :: DB [(Entity Story, Maybe (Entity Tag))]
+    storiesAndTags =
           select $
           from $
             \ (story `LeftOuterJoin` tagging `LeftOuterJoin` tag) -> do
@@ -122,21 +132,12 @@ getStoriesAndTags = do
               on (tagging ?. TaggingStory ==. just (story ^. StoryId))
               return (story, tag)
 
-        maybeToList :: Maybe a -> [a]
-        maybeToList Nothing = []
-        maybeToList (Just a) = [a]
-
-        f :: StoriesMap -> (Entity Story, Maybe (Entity Tag)) -> StoriesMap
-        f storiesMap (story, maybeEntityTag) =
-          let key = entityKey story
-              newTag = maybeToList maybeEntityTag
-              adjuster (_, xs) =
-                (story, newTag ++ xs)
-          in case Map.lookup key storiesMap of
-               Nothing ->
-                 Map.insert key (story, newTag) storiesMap
-               (Just _) ->
-                 Map.adjust adjuster key storiesMap
+    f :: StoriesMap -> (Entity Story, Maybe (Entity Tag)) -> StoriesMap
+    f storiesMap (story, maybeEntityTag) =
+      let key = entityKey story
+          newTag = maybeToList maybeEntityTag
+          combineStoryTags _ (_, oldTags) = (story, newTag ++ oldTags)
+      in Map.insertWith combineStoryTags key (story, newTag) storiesMap
 
 getHomeR :: Handler Html
 getHomeR = do
@@ -145,6 +146,6 @@ getHomeR = do
     setTitle "Home"
     [whamlet|
 <ol .stories .list>
-  $forall (Entity _ story, _) <- databaseStories
-    ^{renderStoryItem story}
+  $forall (Entity _ story, tags) <- databaseStories
+    ^{renderStoryItem story tags}
 |]

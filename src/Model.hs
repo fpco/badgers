@@ -87,7 +87,7 @@ Tag sql=tags
   inactive Bool default=FALSE
   hotnessMod Double default=0.0
   UniqueTagName tag
-  deriving Show
+  deriving Eq Show
 
 Tagging sql=taggings
   story StoryId
