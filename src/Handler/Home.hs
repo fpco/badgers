@@ -13,7 +13,8 @@ import Model
 renderTag :: Tag -> Widget
 renderTag Tag{..} =
   [whamlet|
-<a .tag .tag_practices href="/t/#{tagTag}" title="Development and business practices">
+<a .tag .tag_practices href="@{TagR tagTag}"
+   title="Development and business practices">
   #{tagTag}
 |]
 
@@ -121,4 +122,12 @@ getHomeR = do
 <ol .stories .list>
   $forall (Entity _ story, tags) <- databaseStories
     ^{renderStoryItem story tags}
+|]
+
+getTagR :: Text -> Handler Html
+getTagR tag = do
+  baseLayout Nothing $ do
+    setTitle "Tag"
+    [whamlet|
+<h1>#{tag}
 |]

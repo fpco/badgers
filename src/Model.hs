@@ -93,7 +93,7 @@ Tagging sql=taggings
   story StoryId
   tag TagId
   UniqueStoryTagPair story tag
-  deriving Show
+  deriving Eq Show
 
 Vote sql=votes
   user UserId
@@ -101,7 +101,7 @@ Vote sql=votes
   vote Int64
   reason Text -- enum?
   updatedAt UTCTime
-  deriving Show
+  deriving Eq Show
 |]
 --   comment CommentId Maybe
 

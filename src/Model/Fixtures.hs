@@ -16,6 +16,10 @@ data StoryFixtures =
   StoryFixtures { allStoriesF :: [Entity Story] }
   deriving (Eq, Show)
 
+data TaggingFixtures =
+  TaggingFixtures { allTaggingsF :: [Entity Tagging] }
+  deriving (Eq, Show)
+
 data TagFixtures =
   TagFixtures { allTagsF :: [Entity Tag] }
   deriving (Eq, Show)
@@ -24,6 +28,7 @@ data Fixtures =
   Fixtures { userF     :: UserFixtures
            , storyF    :: StoryFixtures
            , tagF      :: TagFixtures
+           , taggingF  :: TaggingFixtures
            }
   deriving (Eq, Show)
 
@@ -90,33 +95,56 @@ defaultCreateTag tagTag =
 makeTags :: DB [Entity Tag]
 makeTags = do
   let tagNames = [ "python"
-                  , "haskell"
-                  , "programing"
-                  , "practices"
+                 , "haskell"
+                 , "programming"
+                 , "practices"
                  ]
       tags = map defaultCreateTag tagNames
   traverse insertEntity tags
 
-makeTaggings :: [Entity Tag] -> [Entity Story] -> DB [Entity Tagging]
+
+-- [(StoryId, [Entity Tag])]
+
+makeTaggings :: [TagId] -> [StoryId] -> DB [Entity Tagging]
 makeTaggings tagIds storyIds =
-  let taggings = [ Tagging{..} | (Entity taggingTag _) <- tagIds, (Entity taggingStory _) <- storyIds ]
+  let tagsForStories =
+        [ [ tagIds !! 0
+          , tagIds !! 2
+          ]
+        , [ tagIds !! 1
+          , tagIds !! 3
+          ]
+        , [ tagIds !! 0
+          , tagIds !! 3
+          ]
+        ]
+      defaultTags = repeat tagIds
+      storyTagPairs :: [(StoryId, [TagId])]
+      storyTagPairs = zip storyIds (tagsForStories <> defaultTags)
+      taggingsForSTP :: (StoryId, [TagId])
+                     -> [Tagging]
+      taggingsForSTP (story, tags) =
+        fmap (Tagging story) tags
+      taggings :: [Tagging]
+      taggings =
+        storyTagPairs >>= taggingsForSTP
   in
     traverse insertEntity taggings
 
 insertFixtures :: DB Fixtures
 insertFixtures = do
-  liftIO $ putStrLn "before makeAccounts"
   allUsersF <- makeAccounts
-  liftIO $ putStrLn "after makeAccounts"
   let userId = entityKey (allUsersF !! 0)
   allStoriesF <- makeStories userId
-  liftIO $ putStrLn "after makeStories"
   allTagsF <- makeTags
-  liftIO $ putStrLn "after makeTags"
-  _ <- makeTaggings allTagsF allStoriesF
+  allTaggingsF <-
+    makeTaggings
+      (fmap entityKey allTagsF)
+      (fmap entityKey allStoriesF)
   let userF = UserFixtures {..}
       storyF = StoryFixtures {..}
       tagF = TagFixtures {..}
+      taggingF = TaggingFixtures {..}
   return Fixtures {..}
 
 

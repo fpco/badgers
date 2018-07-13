@@ -11,6 +11,7 @@ mkYesodData "App" [parseRoutes|
 
 -- Users
 /u/#UserId/admin AdminR GET POST
+/t/#Text TagR GET
 /settings SettingsR GET POST
 
 -- Auth
