@@ -39,6 +39,9 @@ ghcid:
 dev-deps:
 	stack install ghcid
 
+psql:
+	sudo -u postgres psql badgers_dev
+
 reset-database: destroy-create-db migration fixtures
 
 reset-data: truncate-tables fixtures

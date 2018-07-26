@@ -79,6 +79,34 @@ Story sql=stories
   UniqueShortId shortId
   deriving Eq Ord Show
 
+--     t.index ["comment"], name: "index_comments_on_comment", type: :fulltext
+--     t.index ["confidence"], name: "confidence_idx"
+--     t.index ["short_id"], name: "short_id", unique: true
+--     t.index ["story_id", "short_id"], name: "story_id_short_id"
+--     t.index ["thread_id"], name: "thread_id"
+--     t.index ["user_id", "story_id", "downvotes", "created_at"], name: "downvote_index"
+--     t.index ["user_id"], name: "index_comments_on_user_id"
+--   end
+
+Comment sql=comments
+  createdAt UTCTime
+  updatedAt UTCTime
+  shortId Text sqltype=varchar(10)
+  story StoryId
+  user UserId
+  parentComment CommentId Maybe
+  rootComment CommentId Maybe
+  comment Text sqltype=varchar(10485760)
+  upvotes Int64 default=0
+  downvotes Int64 default=0
+  confidence Double default=0.0
+  markeddownComment Text sqltype=varchar(10485760)
+  isDeleted Bool default=false
+  isModerated Bool default=false
+  isFromEmail Bool default=false
+  -- hat HatId
+  deriving Eq Ord Show
+
 Tag sql=tags
   tag Text sqltype=varchar(25)
   description Text Maybe sqltype=varchar(100)
@@ -102,6 +130,8 @@ Vote sql=votes
   reason Text -- enum?
   updatedAt UTCTime
   deriving Eq Show
+
+
 |]
 --   comment CommentId Maybe
 

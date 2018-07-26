@@ -64,7 +64,8 @@ renderStoryItem Story{..} tags =
         <span .comments_label>
           |
 
-          <a href="/s/hujw8d/lessons_learned_working_from_home">
+          <!-- <a href="/s/#{storyShortId}/lessons_learned_working_from_home"> -->
+          <a href=@{CommentR storyShortId "this-is-a-slug"}>
             13 comments
 
   <div .mobile_comments style="display: none;">

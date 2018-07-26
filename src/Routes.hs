@@ -8,6 +8,7 @@ mkYesodData "App" [parseRoutes|
 /static StaticR Static appStatic
 
 / HomeR GET
+/s/#Text/#Text CommentR GET
 
 -- Users
 /u/#UserId/admin AdminR GET POST

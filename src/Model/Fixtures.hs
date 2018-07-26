@@ -24,11 +24,16 @@ data TagFixtures =
   TagFixtures { allTagsF :: [Entity Tag] }
   deriving (Eq, Show)
 
+data CommentFixtures =
+  CommentFixtures { allCommentsF :: [Entity Comment] }
+  deriving (Eq, Show)
+
 data Fixtures =
   Fixtures { userF     :: UserFixtures
            , storyF    :: StoryFixtures
            , tagF      :: TagFixtures
            , taggingF  :: TaggingFixtures
+           , commentF  :: CommentFixtures
            }
   deriving (Eq, Show)
 
@@ -131,6 +136,69 @@ makeTaggings tagIds storyIds =
   in
     traverse insertEntity taggings
 
+makeComment :: StoryId
+            -> UserId
+            -> Maybe CommentId
+            -> Maybe CommentId
+            -> Text
+            -> DB (Entity Comment)
+makeComment storyId userId parentCommentId rootCommentId commentText = do
+  t <- liftIO getCurrentTime
+  shortId <- liftIO $ RS.randomString (RS.onlyAlpha RS.randomASCII) 6
+  let comment =
+        Comment {
+          commentCreatedAt = t,
+          commentUpdatedAt = t,
+          commentShortId = pack shortId,
+          commentStory = storyId,
+          commentUser = userId,
+          commentParentComment = parentCommentId,
+          commentRootComment = rootCommentId,
+          commentComment = commentText,
+          commentUpvotes = 3,
+          commentDownvotes = 0,
+          commentConfidence = 0.5,
+          commentMarkeddownComment = commentText,
+          commentIsDeleted = False,
+          commentIsModerated = False,
+          commentIsFromEmail = False
+        }
+  insertEntity comment
+
+makeComments :: StoryId -> UserId -> DB [Entity Comment]
+makeComments storyId userId = do
+  grootComment <-
+    makeComment storyId userId Nothing Nothing "I am the gRoot comment"
+  let grootCommentK = entityKey grootComment
+  groot2 <-
+    makeComment
+      storyId userId
+      (Just grootCommentK) (Just grootCommentK)
+      "I am Groot Two"
+  let groot2K = entityKey groot2
+  groot3 <-
+    makeComment
+      storyId userId
+      (Just groot2K) (Just grootCommentK)
+      "I am Groot Three"
+  newRoot <-
+    makeComment
+      storyId userId
+      Nothing Nothing
+      "I am the other root"
+  let newRootK = entityKey newRoot
+  newRoot2 <-
+    makeComment
+      storyId userId
+      (Just newRootK) (Just newRootK)
+      "I am the other root Two"
+  return [ grootComment
+         , groot2
+         , groot3
+         , newRoot
+         , newRoot2
+         ]
+
 insertFixtures :: DB Fixtures
 insertFixtures = do
   allUsersF <- makeAccounts
@@ -141,10 +209,15 @@ insertFixtures = do
     makeTaggings
       (fmap entityKey allTagsF)
       (fmap entityKey allStoriesF)
+  let storyId =
+        entityKey (allStoriesF !! 0)
+  allCommentsF <-
+    makeComments storyId userId
   let userF = UserFixtures {..}
       storyF = StoryFixtures {..}
       tagF = TagFixtures {..}
       taggingF = TaggingFixtures {..}
+      commentF = CommentFixtures {..}
   return Fixtures {..}
 
 

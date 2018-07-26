@@ -1,0 +1,995 @@
+-- comments :: Widget
+-- comments = [whamlet|
+--   <li .comments_subtree>
+--     <input .comment_folder_button #comment_folder_trz9yd type="checkbox">
+--     <div .comment data-shortid="trz9yd" #c_trz9yd>
+--       <label .comment_folder for="comment_folder_trz9yd">
+--       <div .voters>
+--         <a .upvoter>
+--         <div .score>
+--           14
+--         <a .downvoter>
+--       <div .comment_parent_tree_line .can_downvote .score_shown>
+--       <div .details>
+--         <div .byline>
+--           <a name="c_trz9yd">
+--           <label .comment_folder .comment_folder_inline for="comment_folder_trz9yd">
+--           <a href="/u/JordiGH">
+--             <img alt="JordiGH avatar" .avatar height="16" src="/avatars/JordiGH-16.png" srcset="/avatars/JordiGH-16.png 1x, /avatars/JordiGH-32.png 2x" width="16">
+--           <a href="/u/JordiGH">
+--             JordiGH
+--           <span title="2018-07-25 00:25:53 -0500">
+--             37 hours ago
+--           |
+                  
+--           <a href="https://lobste.rs/s/gpzhu8/is_freedom_zero_such_hot_idea#c_trz9yd">
+--             link
+--           |
+                      
+--           <a .comment_replier tabindex="0" unselectable="on">
+--             reply
+--           <span .reason>
+--         <div .comment_text>
+--           <p>
+--             This idea comes up from time to time. It’s an old idea. Here are two rms articles that address it.
+--           <p>
+--             <a href="https://www.gnu.org/licenses/hessla.html" rel="nofollow">
+--               https://www.gnu.org/licenses/hessla.html
+--           <p>
+--             <a href="https://www.gnu.org/philosophy/programs-must-not-limit-freedom-to-run.html" rel="nofollow">
+--               https://www.gnu.org/philosophy/programs-must-not-limit-freedom-to-run.html
+--           <p>
+--             Basically: if you’re evil enough to do evil stuff, violating copyright is something you won’t think is very evil at all. So even without the argument about how impossible it is to define evil, a copyright-based license isn’t going to stop anyone from doing evil.
+--     <ol .comments>
+--       <li .comments_subtree>
+--         <input .comment_folder_button #comment_folder_jmnuar type="checkbox">
+--         <div .comment data-shortid="jmnuar" #c_jmnuar>
+--           <label .comment_folder for="comment_folder_jmnuar">
+--           <div .voters>
+--             <a .upvoter>
+--             <div .score>
+--               5
+--             <a .downvoter>
+--           <div .comment_parent_tree_line .can_downvote .score_shown>
+--           <div .details>
+--             <div .byline>
+--               <a name="c_jmnuar">
+--               <label .comment_folder .comment_folder_inline for="comment_folder_jmnuar">
+--               <a href="/u/rtpg">
+--                 <img alt="rtpg avatar" .avatar height="16" src="/avatars/rtpg-16.png" srcset="/avatars/rtpg-16.png 1x, /avatars/rtpg-32.png 2x" width="16">
+--               <a href="/u/rtpg">
+--                 rtpg
+--               <span title="2018-07-25 02:43:29 -0500">
+--                 35 hours ago
+--               |
+                      
+--               <a href="https://lobste.rs/s/gpzhu8/is_freedom_zero_such_hot_idea#c_jmnuar">
+--                 link
+--               |
+                          
+--               <a .comment_replier tabindex="0" unselectable="on">
+--                 reply
+--               <span .reason>
+--             <div .comment_text>
+--               <p>
+--                 I don’t think this holds up in countries with established rule of law. It’s easy to forget that you can sue the government in court in the US and then the government will stop (at least most of the time). It’s just the overton window has shifted so much that we only think of “evil” in terms of things that don’t happen in this day and age, when terrible things are happening all the time and continue to be enabled by technology.
+--               <p>
+--                 If there’s anything that unities most people, it’s the fear of having all their assets frozen. And the spectrum of evil stops way before “evil mastermind with 1000 offshore accounts and 20 fake identies”.
+--         <div .comment_siblings_tree_line>
+--         <ol .comments>
+--           <li .comments_subtree>
+--             <input .comment_folder_button #comment_folder_wwyysl type="checkbox">
+--             <div .comment data-shortid="wwyysl" #c_wwyysl>
+--               <label .comment_folder for="comment_folder_wwyysl">
+--               <div .voters>
+--                 <a .upvoter>
+--                 <div .score>
+--                   ~
+--                 <a .downvoter>
+--               <div .comment_parent_tree_line .can_downvote .score_shown .no_children>
+--               <div .details>
+--                 <div .byline>
+--                   <a name="c_wwyysl">
+--                   <label .comment_folder .comment_folder_inline for="comment_folder_wwyysl">
+--                   <a href="/u/hyperpape">
+--                     <img alt="hyperpape avatar" .avatar height="16" src="/avatars/hyperpape-16.png" srcset="/avatars/hyperpape-16.png 1x, /avatars/hyperpape-32.png 2x" width="16">
+--                   <a href="/u/hyperpape">
+--                     hyperpape
+--                   <span title="2018-07-25 07:28:52 -0500">
+--                     30 hours ago
+--                   |
+                          
+--                   <a href="https://lobste.rs/s/gpzhu8/is_freedom_zero_such_hot_idea#c_wwyysl">
+--                     link
+--                   |
+                              
+--                   <a .comment_replier tabindex="0" unselectable="on">
+--                     reply
+--                   <span .reason>
+--                 <div .comment_text>
+--                   <p>
+--                     I agree. Julian Sanchez made this point about the NSA/CIA recently, that the bulk of their abuses of power inside the USA are either legal. If they’re not obviously legal, they often fall into a legal grey area, but the right person in the chain of command said that they were legal.
+--                   <p>
+--                     Career government officials tend to have a habit of following most rules of the organizations they inhabit, but may do a lot of shady things that don’t obviously violate those rules.
+--             <div .comment_siblings_tree_line>
+--             <ol .comments>
+--           <li .comments_subtree>
+--             <input .comment_folder_button #comment_folder_akzhnh type="checkbox">
+--             <div .comment data-shortid="akzhnh" #c_akzhnh>
+--               <label .comment_folder for="comment_folder_akzhnh">
+--               <div .voters>
+--                 <a .upvoter>
+--                 <div .score>
+--                   ~
+--                 <a .downvoter>
+--               <div .comment_parent_tree_line .can_downvote .score_shown .no_children>
+--               <div .details>
+--                 <div .byline>
+--                   <a name="c_akzhnh">
+--                   <label .comment_folder .comment_folder_inline for="comment_folder_akzhnh">
+--                   <a href="/u/JordiGH">
+--                     <img alt="JordiGH avatar" .avatar height="16" src="/avatars/JordiGH-16.png" srcset="/avatars/JordiGH-16.png 1x, /avatars/JordiGH-32.png 2x" width="16">
+--                   <a href="/u/JordiGH">
+--                     JordiGH
+--                   <span title="2018-07-25 16:51:03 -0500">
+--                     21 hours ago
+--                   |
+                          
+--                   <a href="https://lobste.rs/s/gpzhu8/is_freedom_zero_such_hot_idea#c_akzhnh">
+--                     link
+--                   |
+                              
+--                   <a .comment_replier tabindex="0" unselectable="on">
+--                     reply
+--                   <span .reason>
+--                 <div .comment_text>
+--                   <p>
+--                     I think I should have read my own links. rms also argues that such restrictions on use based on copyright are likely unenforcible. I don’t recall ever reading about a case where someone violated a license’s conditions on usage (e.g. using Java in a nuclear reactor) and was thus found to be violating copyright. Has that happened?
+--             <div .comment_siblings_tree_line>
+--             <ol .comments>
+--           <li .comments_subtree>
+--             <input .comment_folder_button #comment_folder_uy06u6 type="checkbox">
+--             <div .comment data-shortid="uy06u6" #c_uy06u6>
+--               <label .comment_folder for="comment_folder_uy06u6">
+--               <div .voters>
+--                 <a .upvoter>
+--                 <div .score>
+--                   ~
+--                 <a .downvoter>
+--               <div .comment_parent_tree_line .can_downvote .score_shown .no_children>
+--               <div .details>
+--                 <div .byline>
+--                   <a name="c_uy06u6">
+--                   <label .comment_folder .comment_folder_inline for="comment_folder_uy06u6">
+--                   <a href="/u/JordiGH">
+--                     <img alt="JordiGH avatar" .avatar height="16" src="/avatars/JordiGH-16.png" srcset="/avatars/JordiGH-16.png 1x, /avatars/JordiGH-32.png 2x" width="16">
+--                   <a href="/u/JordiGH">
+--                     JordiGH
+--                   <span title="2018-07-25 19:28:23 -0500">
+--                     18 hours ago
+--                   |
+                          
+--                   <a href="https://lobste.rs/s/gpzhu8/is_freedom_zero_such_hot_idea#c_uy06u6">
+--                     link
+--                   |
+                              
+--                   <a .comment_replier tabindex="0" unselectable="on">
+--                     reply
+--                   <span .reason>
+--                 <div .comment_text>
+--                   <p>
+--                     Also: trying to sue the US government for copyright infringement because they used some software to facilitate torture (for example) doesn’t seem to me like a fruitful approach. Maybe with some optimism something could be done about human rights abuses in the US, but going the copyright infringement path doesn’t seem likely to work.
+--             <div .comment_siblings_tree_line>
+--             <ol .comments>
+--       <li .comments_subtree>
+--         <input .comment_folder_button #comment_folder_d16uso type="checkbox">
+--         <div .comment data-shortid="d16uso" #c_d16uso>
+--           <label .comment_folder for="comment_folder_d16uso">
+--           <div .voters>
+--             <a .upvoter>
+--             <div .score>
+--               ~
+--             <a .downvoter>
+--           <div .comment_parent_tree_line .can_downvote .score_shown .no_children>
+--           <div .details>
+--             <div .byline>
+--               <a name="c_d16uso">
+--               <label .comment_folder .comment_folder_inline for="comment_folder_d16uso">
+--               <a href="/u/dsschnau">
+--                 <img alt="dsschnau avatar" .avatar height="16" src="/avatars/dsschnau-16.png" srcset="/avatars/dsschnau-16.png 1x, /avatars/dsschnau-32.png 2x" width="16">
+--               <a href="/u/dsschnau">
+--                 dsschnau
+--               <span title="2018-07-25 08:25:56 -0500">
+--                 29 hours ago
+--               |
+                      
+--               <a href="https://lobste.rs/s/gpzhu8/is_freedom_zero_such_hot_idea#c_d16uso">
+--                 link
+--               |
+                          
+--               <a .comment_replier tabindex="0" unselectable="on">
+--                 reply
+--               <span .reason>
+--             <div .comment_text>
+--               <p>
+--                 Glad to hear it’s been addressed already by gnu. I was thinking along similar lines, like “Eh, I see the problem, but I don’t think giving up freedom zero is the answer.” Of course, I don’t have a good solution either, other than a better more democratic government with well-informed citizens and a functioning justice system.
+--         <div .comment_siblings_tree_line>
+--         <ol .comments>
+--   <li .comments_subtree>
+--     <input .comment_folder_button #comment_folder_hxmqia type="checkbox">
+--     <div .comment data-shortid="hxmqia" #c_hxmqia>
+--       <label .comment_folder for="comment_folder_hxmqia">
+--       <div .voters>
+--         <a .upvoter>
+--         <div .score>
+--           8
+--         <a .downvoter>
+--       <div .comment_parent_tree_line .can_downvote .score_shown .no_children>
+--       <div .details>
+--         <div .byline>
+--           <a name="c_hxmqia">
+--           <label .comment_folder .comment_folder_inline for="comment_folder_hxmqia">
+--           <a href="/u/mjn">
+--             <img alt="mjn avatar" .avatar height="16" src="/avatars/mjn-16.png" srcset="/avatars/mjn-16.png 1x, /avatars/mjn-32.png 2x" width="16">
+--           <a href="/u/mjn">
+--             mjn
+--           edited
+                  
+--           <span title="2018-07-24 17:28:14 -0500">
+--             44 hours ago
+--           |
+                  
+--           <a href="https://lobste.rs/s/gpzhu8/is_freedom_zero_such_hot_idea#c_hxmqia">
+--             link
+--           |
+                      
+--           <a .comment_replier tabindex="0" unselectable="on">
+--             reply
+--           <span .reason>
+--         <div .comment_text>
+--           <p>
+--             It’s not common in software, but it’s become pretty normalized in licensing of other type of materials to violate it, through the Creative Commons set of licenses. Without arguing which is better or worse, it seems like mostly historical reasons that one set of norms (the FSF’s) prevailed in software, while another one (CC’s) prevailed in other kinds of material.
+--           <p>
+--             In software, the big debate in the “free” world seems to be between GPL-style copyleft licenses and MIT/BSD-style permissive licenses. Plus a side debate over what you might call “ultra-copyleft” licenses (AGPL-style). But everyone agrees that usage restrictions violating Freezom Zero put you outside the Free World.
+--           <p>
+--             In music/images/etc., though, you have quite common usage of four Creative Common licenses, all of which seem to have cultural acceptance in that scene as “free”, but two of which two violate Freedom Zero. The four licenses are: CC-BY, CC-BY-SA, CC-BY-NC, and CC-BY-NC-SA. The basic one, CC-BY, is roughly a MIT/BSD-style permissive license. Then you can mix and match either or both of the two common restrictions: “sharealike” (SA), which is roughly GPL-style copyleft, and “noncommercial” (NC), which means you can’t make money off the content, and obviously violates Freedom Zero.
+--           <p>
+--             Once you go in that direction, though, one might wonder, is the commercial/noncommercial split the 
+--             <em>
+--               only
+--             or 
+--             <em>
+--               best
+--             way of abrogating Freedom Zero? There was an essay published in 2007 that I found interesting, 
+--             <a href="http://www.metamute.org/editorial/articles/copyfarleft-and-copyjustright" rel="nofollow">
+--               Copyfarleft and Copyjustright
+--             , which argues that CC’s commercial/noncommercial split is trying to pull off a “copyjustright” approach that mainly aims to please certain types of commercial content creators by balancing amateur remix freedom with exclusive right of commercial exploitation. It argues that this balance might not be the right one if your idea of freedom is more far-left and less about promoting entrepreneurship. (I think this critique of C/NC as the right line to draw is basically right, although I’m less sure whether the copyfarleft proposal itself is workable.)
+--     <ol .comments>
+--   <li .comments_subtree>
+--     <input .comment_folder_button #comment_folder_h7dgpt type="checkbox">
+--     <div .comment data-shortid="h7dgpt" #c_h7dgpt>
+--       <label .comment_folder for="comment_folder_h7dgpt">
+--       <div .voters>
+--         <a .upvoter>
+--         <div .score>
+--           13
+--         <a .downvoter>
+--       <div .comment_parent_tree_line .can_downvote .score_shown>
+--       <div .details>
+--         <div .byline>
+--           <a name="c_h7dgpt">
+--           <label .comment_folder .comment_folder_inline for="comment_folder_h7dgpt">
+--           <a href="/u/bargap">
+--             <img alt="bargap avatar" .avatar height="16" src="/avatars/bargap-16.png" srcset="/avatars/bargap-16.png 1x, /avatars/bargap-32.png 2x" width="16">
+--           <a href="/u/bargap">
+--             bargap
+--           <span title="2018-07-24 15:57:10 -0500">
+--             46 hours ago
+--           |
+                  
+--           <a href="https://lobste.rs/s/gpzhu8/is_freedom_zero_such_hot_idea#c_h7dgpt">
+--             link
+--           |
+                      
+--           <a .comment_replier tabindex="0" unselectable="on">
+--             reply
+--           <span .reason>
+--         <div .comment_text>
+--           <p>
+--             I disagree, because that will only lead to a morass of incompatible software. You refuse for your software to be run by law enforcement, he refuses for his software to be run by drug dealers, I refuse for my software to be run by Yankees — where does it all end?
+--           <p>
+--             It’s a profoundly illiberal attitude, and the end result will be that everyone would have to build his own software stack from scratch.
+--     <ol .comments>
+--       <li .comments_subtree>
+--         <input .comment_folder_button #comment_folder_hqutpb type="checkbox">
+--         <div .comment data-shortid="hqutpb" #c_hqutpb>
+--           <label .comment_folder for="comment_folder_hqutpb">
+--           <div .voters>
+--             <a .upvoter>
+--             <div .score>
+--               5
+--             <a .downvoter>
+--           <div .comment_parent_tree_line .can_downvote .score_shown>
+--           <div .details>
+--             <div .byline>
+--               <a name="c_hqutpb">
+--               <label .comment_folder .comment_folder_inline for="comment_folder_hqutpb">
+--               <a href="/u/minimax">
+--                 <img alt="minimax avatar" .avatar height="16" src="/avatars/minimax-16.png" srcset="/avatars/minimax-16.png 1x, /avatars/minimax-32.png 2x" width="16">
+--               <a href="/u/minimax">
+--                 minimax
+--               <span title="2018-07-24 16:48:56 -0500">
+--                 45 hours ago
+--               |
+                      
+--               <a href="https://lobste.rs/s/gpzhu8/is_freedom_zero_such_hot_idea#c_hqutpb">
+--                 link
+--               |
+                          
+--               <a .comment_replier tabindex="0" unselectable="on">
+--                 reply
+--               <span .reason>
+--             <div .comment_text>
+--               <p>
+--                 Previous discussions on 
+--                 <a href="https://www.reddit.com/r/programming/comments/9cx0v/nonmilitary_use_only_software_license/" rel="nofollow">
+--                   reddit
+--                 (8 years ago) and 
+--                 <a href="https://news.ycombinator.com/item?id=14864197" rel="nofollow">
+--                   HN
+--                 (one year ago).
+--         <div .comment_siblings_tree_line>
+--         <ol .comments>
+--           <li .comments_subtree>
+--             <input .comment_folder_button #comment_folder_4km3u4 type="checkbox">
+--             <div .comment data-shortid="4km3u4" #c_4km3u4>
+--               <label .comment_folder for="comment_folder_4km3u4">
+--               <div .voters>
+--                 <a .upvoter>
+--                 <div .score>
+--                   ~
+--                 <a .downvoter>
+--               <div .comment_parent_tree_line .can_downvote .score_shown .no_children>
+--               <div .details>
+--                 <div .byline>
+--                   <a name="c_4km3u4">
+--                   <label .comment_folder .comment_folder_inline for="comment_folder_4km3u4">
+--                   <a href="/u/nickpsecurity">
+--                     <img alt="nickpsecurity avatar" .avatar height="16" src="/avatars/nickpsecurity-16.png" srcset="/avatars/nickpsecurity-16.png 1x, /avatars/nickpsecurity-32.png 2x" width="16">
+--                   <a href="/u/nickpsecurity">
+--                     nickpsecurity
+--                   <span title="2018-07-25 09:21:53 -0500">
+--                     28 hours ago
+--                   |
+                          
+--                   <a href="https://lobste.rs/s/gpzhu8/is_freedom_zero_such_hot_idea#c_4km3u4">
+--                     link
+--                   |
+                              
+--                   <a .comment_replier tabindex="0" unselectable="on">
+--                     reply
+--                   <span .reason>
+--                 <div .comment_text>
+--                   <p>
+--                     “It’s a great way to make sure proprietary software is always well funded and had congress/parliment in their corner.” (TaylorSpokeApe)
+--             <div .comment_siblings_tree_line>
+--             <ol .comments>
+--       <li .comments_subtree>
+--         <input .comment_folder_button #comment_folder_503nmg type="checkbox">
+--         <div .comment data-shortid="503nmg" #c_503nmg>
+--           <label .comment_folder for="comment_folder_503nmg">
+--           <div .voters>
+--             <a .upvoter>
+--             <div .score>
+--               1
+--             <a .downvoter>
+--           <div .comment_parent_tree_line .can_downvote .score_shown>
+--           <div .details>
+--             <div .byline>
+--               <a name="c_503nmg">
+--               <label .comment_folder .comment_folder_inline for="comment_folder_503nmg">
+--               <a href="/u/leeg">
+--                 <img alt="leeg avatar" .avatar height="16" src="/avatars/leeg-16.png" srcset="/avatars/leeg-16.png 1x, /avatars/leeg-32.png 2x" width="16">
+--               <a .user_is_author href="/u/leeg">
+--                 leeg
+--               <span title="2018-07-24 17:27:43 -0500">
+--                 44 hours ago
+--               |
+                      
+--               <a href="https://lobste.rs/s/gpzhu8/is_freedom_zero_such_hot_idea#c_503nmg">
+--                 link
+--               |
+                          
+--               <a .comment_replier tabindex="0" unselectable="on">
+--                 reply
+--               <span .reason>
+--             <div .comment_text>
+--               <p>
+--                 I don’t buy the slippery slope argument. There are published codes of ethics for professional software people by e.g. the BCS or ACM, that may make good templates of what constitutes ethical activity within which to use software.
+--               <p>
+--                 But by all means, if you want to give stuff to the drug dealing Yankee cop when someone else refuses to, please do so.
+--         <div .comment_siblings_tree_line>
+--         <ol .comments>
+--           <li .comments_subtree>
+--             <input .comment_folder_button #comment_folder_m3pbp4 type="checkbox">
+--             <div .comment data-shortid="m3pbp4" #c_m3pbp4>
+--               <label .comment_folder for="comment_folder_m3pbp4">
+--               <div .voters>
+--                 <a .upvoter>
+--                 <div .score>
+--                   9
+--                 <a .downvoter>
+--               <div .comment_parent_tree_line .can_downvote .score_shown>
+--               <div .details>
+--                 <div .byline>
+--                   <a name="c_m3pbp4">
+--                   <label .comment_folder .comment_folder_inline for="comment_folder_m3pbp4">
+--                   <a href="/u/mjn">
+--                     <img alt="mjn avatar" .avatar height="16" src="/avatars/mjn-16.png" srcset="/avatars/mjn-16.png 1x, /avatars/mjn-32.png 2x" width="16">
+--                   <a href="/u/mjn">
+--                     mjn
+--                   edited
+                          
+--                   <span title="2018-07-24 18:18:30 -0500">
+--                     43 hours ago
+--                   |
+                          
+--                   <a href="https://lobste.rs/s/gpzhu8/is_freedom_zero_such_hot_idea#c_m3pbp4">
+--                     link
+--                   |
+                              
+--                   <a .comment_replier tabindex="0" unselectable="on">
+--                     reply
+--                   <span .reason>
+--                 <div .comment_text>
+--                   <p>
+--                     Using one of those codes would be one angle to go for ethical consensus, but precisely because they’re attempts at ethical consensus in fairly broad populations, they mostly don’t do what many of the people wanting restrictions on types of usage would want. One of the more common desires for field-of-usage restriction is, basically, “ban the US/UK military from using my stuff”. But the ACM/BCS ethics codes, and perhaps even more their bodies’ enforcement practices, are pretty much designed so that US/UK military / DARPA / CDE activity doesn’t violate them, since it would be impossible to get broad enough consensus to pass an ACM code of ethics that banned DARPA activity (which funds many ACM members’ work).
+--                   <p>
+--                     It seems even worse if you want an international software license. Even given the ACM or BCS text as written, you would get 
+--                     <em>
+--                       completely
+--                     different answers about what violates it or doesn’t, if you went to five different countries with different cultures and legal traditions. The ACM code, at least, has a specific enforcement mechanism defined, which includes mainly US-based people. Is 
+--                     <em>
+--                       that
+--                     a viable basis for a worldwide license, Americans deciding on ethics for everyone else? Or do you take the text excluding the enforcement mechanism, and let each country decide what things violate the text as written or not? Then you get very different answers in different places. Do we need some kind of international ethics court under UN auspices instead, to come up with a global verdict?
+--             <div .comment_siblings_tree_line>
+--             <ol .comments>
+--               <li .comments_subtree>
+--                 <input checked="" .comment_folder_button #comment_folder_cmfe8b type="checkbox">
+--                 <div .comment .bad data-shortid="cmfe8b" #c_cmfe8b>
+--                   <label .comment_folder for="comment_folder_cmfe8b">
+--                   <div .voters>
+--                     <a .upvoter>
+--                     <div .score>
+--                       -10
+--                     <span .downvoter .downvoter_stub>
+--                   <div .comment_parent_tree_line .score_shown .no_children>
+--                   <div .details>
+--                     <div .byline>
+--                       <a name="c_cmfe8b">
+--                       <label .comment_folder .comment_folder_inline for="comment_folder_cmfe8b">
+--                       <a href="/u/kel">
+--                         <img alt="kel avatar" .avatar height="16" src="/avatars/kel-16.png" srcset="/avatars/kel-16.png 1x, /avatars/kel-32.png 2x" width="16">
+--                       <a href="/u/kel">
+--                         kel
+--                       <span title="2018-07-24 23:26:29 -0500">
+--                         38 hours ago
+--                       |
+                              
+--                       <a href="https://lobste.rs/s/gpzhu8/is_freedom_zero_such_hot_idea#c_cmfe8b">
+--                         link
+--                       |
+                                  
+--                       <a .comment_replier tabindex="0" unselectable="on">
+--                         reply
+--                       <span .reason>
+--                     <div .comment_text>
+--                       <p>
+--                         I had a thought to write software so stupid no government would use it but then I remembered linux exists
+--                 <div .comment_siblings_tree_line>
+--                 <ol .comments>
+--           <li .comments_subtree>
+--             <input .comment_folder_button #comment_folder_3p5wky type="checkbox">
+--             <div .comment data-shortid="3p5wky" #c_3p5wky>
+--               <label .comment_folder for="comment_folder_3p5wky">
+--               <div .voters>
+--                 <a .upvoter>
+--                 <div .score>
+--                   4
+--                 <a .downvoter>
+--               <div .comment_parent_tree_line .can_downvote .score_shown .no_children>
+--               <div .details>
+--                 <div .byline>
+--                   <a name="c_3p5wky">
+--                   <label .comment_folder .comment_folder_inline for="comment_folder_3p5wky">
+--                   <a href="/u/user545">
+--                     <img alt="user545 avatar" .avatar height="16" src="/avatars/user545-16.png" srcset="/avatars/user545-16.png 1x, /avatars/user545-32.png 2x" width="16">
+--                   <a href="/u/user545">
+--                     user545
+--                   <span title="2018-07-25 00:04:49 -0500">
+--                     38 hours ago
+--                   |
+                          
+--                   <a href="https://lobste.rs/s/gpzhu8/is_freedom_zero_such_hot_idea#c_3p5wky">
+--                     link
+--                   |
+                              
+--                   <a .comment_replier tabindex="0" unselectable="on">
+--                     reply
+--                   <span .reason>
+--                 <div .comment_text>
+--                   <p>
+--                     It’s not a slippery slope. The example in the OP link would make the software incompatible with just about everything other than stuff of the same license or proprietary software. An MIT project would be unable to use any of the code from a project with such a rule.
+--             <div .comment_siblings_tree_line>
+--             <ol .comments>
+--   <li .comments_subtree>
+--     <input .comment_folder_button #comment_folder_9uhjw2 type="checkbox">
+--     <div .comment data-shortid="9uhjw2" #c_9uhjw2>
+--       <label .comment_folder for="comment_folder_9uhjw2">
+--       <div .voters>
+--         <a .upvoter>
+--         <div .score>
+--           7
+--         <a .downvoter>
+--       <div .comment_parent_tree_line .can_downvote .score_shown .no_children>
+--       <div .details>
+--         <div .byline>
+--           <a name="c_9uhjw2">
+--           <label .comment_folder .comment_folder_inline for="comment_folder_9uhjw2">
+--           <a href="/u/lmm">
+--             <img alt="lmm avatar" .avatar height="16" src="/avatars/lmm-16.png" srcset="/avatars/lmm-16.png 1x, /avatars/lmm-32.png 2x" width="16">
+--           <a href="/u/lmm">
+--             lmm
+--           <span title="2018-07-25 05:37:40 -0500">
+--             32 hours ago
+--           |
+                  
+--           <a href="https://lobste.rs/s/gpzhu8/is_freedom_zero_such_hot_idea#c_9uhjw2">
+--             link
+--           |
+                      
+--           <a .comment_replier tabindex="0" unselectable="on">
+--             reply
+--           <span .reason>
+--         <div .comment_text>
+--           <p>
+--             Freedom is meaningless if you don’t believe your deepest enemies should have it. Supporting free speech, or the right to a fair trial, or basic income, means supporting it even for despicable people. So it is with supporting freedom. It’s fine to believe that only people who agree with you should be able to run your code, just as it’s fine to believe that only people who pay you should be able to run your code, but at that point you’re firmly in the proprietary camp.
+--     <ol .comments>
+--   <li .comments_subtree>
+--     <input .comment_folder_button #comment_folder_qaw5lh type="checkbox">
+--     <div .comment data-shortid="qaw5lh" #c_qaw5lh>
+--       <label .comment_folder for="comment_folder_qaw5lh">
+--       <div .voters>
+--         <a .upvoter>
+--         <div .score>
+--           6
+--         <a .downvoter>
+--       <div .comment_parent_tree_line .can_downvote .score_shown>
+--       <div .details>
+--         <div .byline>
+--           <a name="c_qaw5lh">
+--           <label .comment_folder .comment_folder_inline for="comment_folder_qaw5lh">
+--           <a href="/u/chbarts">
+--             <img alt="chbarts avatar" .avatar height="16" src="/avatars/chbarts-16.png" srcset="/avatars/chbarts-16.png 1x, /avatars/chbarts-32.png 2x" width="16">
+--           <a href="/u/chbarts">
+--             chbarts
+--           <span title="2018-07-24 17:36:31 -0500">
+--             44 hours ago
+--           |
+                  
+--           <a href="https://lobste.rs/s/gpzhu8/is_freedom_zero_such_hot_idea#c_qaw5lh">
+--             link
+--           |
+                      
+--           <a .comment_replier tabindex="0" unselectable="on">
+--             reply
+--           <span .reason>
+--         <div .comment_text>
+--           <p>
+--             I have a half-formed idea in my head, based on reading this and a lot of other things, so I might as well post:
+--           <p>
+--             You can’t run a society with only nice people. Not that you need to be not-nice to run a society, although that might also be the case, but that there’s no consistent set of nice people in the world, both as society changes and what was nice becomes not-nice and vice-versa, and, more importantly, as people exist and are people and bounce off each other and leave bruises in that bouncing. Nobody’s perceived as nice all the time, regardless of their intentions, and the Fundamental Attribution Error (“I did that because I had a bad day, they did that because they’re fundamentally shitty people we must now shun forever.”) fundamentally guarantees that good faith will not always be assumed.
+--           <p>
+--             You might be able to hold organizations to higher standards, if you realize that organizations don’t have morals, they have interests, which might not always align with yours. 
+--             <em>
+--               Not
+--             understanding that leads you into errors like thinking the ACLU is fundamentally opposed to Christians: They’ve defended Christians in the past, and will do so in the future, but they’ve also 
+--             <em>
+--               not
+--             taken the side of Christians. The ACLU’s stance is very consistent, but if you view the world in terms of Christian/Anti-Christian or Nice/Not-Nice or any other 
+--             <em>
+--               single
+--             axis, and won’t budge, it seems either random or evil.
+--           <p>
+--             All the echo chambers are open. The center cannot hold, and mere Not-Niceness is loosed upon the world.
+--     <ol .comments>
+--       <li .comments_subtree>
+--         <input .comment_folder_button #comment_folder_s0otxa type="checkbox">
+--         <div .comment data-shortid="s0otxa" #c_s0otxa>
+--           <label .comment_folder for="comment_folder_s0otxa">
+--           <div .voters>
+--             <a .upvoter>
+--             <div .score>
+--               5
+--             <a .downvoter>
+--           <div .comment_parent_tree_line .can_downvote .score_shown>
+--           <div .details>
+--             <div .byline>
+--               <a name="c_s0otxa">
+--               <label .comment_folder .comment_folder_inline for="comment_folder_s0otxa">
+--               <a href="/u/kel">
+--                 <img alt="kel avatar" .avatar height="16" src="/avatars/kel-16.png" srcset="/avatars/kel-16.png 1x, /avatars/kel-32.png 2x" width="16">
+--               <a href="/u/kel">
+--                 kel
+--               <span title="2018-07-24 23:29:58 -0500">
+--                 38 hours ago
+--               |
+                      
+--               <a href="https://lobste.rs/s/gpzhu8/is_freedom_zero_such_hot_idea#c_s0otxa">
+--                 link
+--               |
+                          
+--               <a .comment_replier tabindex="0" unselectable="on">
+--                 reply
+--               <span .reason>
+--             <div .comment_text>
+--               <p>
+--                 I don’t think I’d talk about ICE or the US Military as people who are just “not nice”
+--         <div .comment_siblings_tree_line>
+--         <ol .comments>
+--           <li .comments_subtree>
+--             <input .comment_folder_button #comment_folder_5tzoq0 type="checkbox">
+--             <div .comment data-shortid="5tzoq0" #c_5tzoq0>
+--               <label .comment_folder for="comment_folder_5tzoq0">
+--               <div .voters>
+--                 <a .upvoter>
+--                 <div .score>
+--                   ~
+--                 <a .downvoter>
+--               <div .comment_parent_tree_line .can_downvote .score_shown .no_children>
+--               <div .details>
+--                 <div .byline>
+--                   <a name="c_5tzoq0">
+--                   <label .comment_folder .comment_folder_inline for="comment_folder_5tzoq0">
+--                   <a href="/u/friendlysock">
+--                     <img alt="friendlysock avatar" .avatar height="16" src="/avatars/friendlysock-16.png" srcset="/avatars/friendlysock-16.png 1x, /avatars/friendlysock-32.png 2x" width="16">
+--                   <a href="/u/friendlysock">
+--                     friendlysock
+--                   <span title="2018-07-25 10:38:00 -0500">
+--                     27 hours ago
+--                   |
+                          
+--                   <a href="https://lobste.rs/s/gpzhu8/is_freedom_zero_such_hot_idea#c_5tzoq0">
+--                     link
+--                   |
+                              
+--                   <a .comment_replier tabindex="0" unselectable="on">
+--                     reply
+--                   <span .reason>
+--                 <div .comment_text>
+--                   <p>
+--                     Painting in broad strokes and without acknowledgment of context and history is not a good way to have a conversation.
+--             <div .comment_siblings_tree_line>
+--             <ol .comments>
+--   <li .comments_subtree>
+--     <input .comment_folder_button #comment_folder_ekqqdx type="checkbox">
+--     <div .comment data-shortid="ekqqdx" #c_ekqqdx>
+--       <label .comment_folder for="comment_folder_ekqqdx">
+--       <div .voters>
+--         <a .upvoter>
+--         <div .score>
+--           3
+--         <a .downvoter>
+--       <div .comment_parent_tree_line .can_downvote .score_shown>
+--       <div .details>
+--         <div .byline>
+--           <a name="c_ekqqdx">
+--           <label .comment_folder .comment_folder_inline for="comment_folder_ekqqdx">
+--           <a href="/u/nickpsecurity">
+--             <img alt="nickpsecurity avatar" .avatar height="16" src="/avatars/nickpsecurity-16.png" srcset="/avatars/nickpsecurity-16.png 1x, /avatars/nickpsecurity-32.png 2x" width="16">
+--           <a href="/u/nickpsecurity">
+--             nickpsecurity
+--           <span title="2018-07-24 13:40:43 -0500">
+--             2 days ago
+--           |
+                  
+--           <a href="https://lobste.rs/s/gpzhu8/is_freedom_zero_such_hot_idea#c_ekqqdx">
+--             link
+--           |
+                      
+--           <a .comment_replier tabindex="0" unselectable="on">
+--             reply
+--           <span .reason>
+--         <div .comment_text>
+--           <p>
+--             It might work up to a certain point for buyers who otherwise would buy proprietary software. Their EULA’s are already ridiculous. I’ll note that the military has been known to sometimes just steal stuff if they need it. Here’s 
+--             <a href="https://torrentfreak.com/u-s-caught-pirating-military-software-pays-50-million-to-settle-131127/" rel="nofollow">
+--               Army
+--             and 
+--             <a href="https://blogs.findlaw.com/in_house/2018/03/software-company-accuses-military-of-copyright-piracy.html" rel="nofollow">
+--               Navy
+--             examples. In theory, they can make it classified, too, to try to block you proving it in court. At that point, you’re trying to beat them with DRM plus online, license checks to reduce the odds of that. That annoys regular customers, though.
+--           <p>
+--             This seems most doable with a SaaS solution.
+--     <ol .comments>
+--       <li .comments_subtree>
+--         <input .comment_folder_button #comment_folder_w22bex type="checkbox">
+--         <div .comment data-shortid="w22bex" #c_w22bex>
+--           <label .comment_folder for="comment_folder_w22bex">
+--           <div .voters>
+--             <a .upvoter>
+--             <div .score>
+--               3
+--             <a .downvoter>
+--           <div .comment_parent_tree_line .can_downvote .score_shown .no_children>
+--           <div .details>
+--             <div .byline>
+--               <a name="c_w22bex">
+--               <label .comment_folder .comment_folder_inline for="comment_folder_w22bex">
+--               <a href="/u/leeg">
+--                 <img alt="leeg avatar" .avatar height="16" src="/avatars/leeg-16.png" srcset="/avatars/leeg-16.png 1x, /avatars/leeg-32.png 2x" width="16">
+--               <a .user_is_author href="/u/leeg">
+--                 leeg
+--               <span title="2018-07-24 14:06:09 -0500">
+--                 2 days ago
+--               |
+                      
+--               <a href="https://lobste.rs/s/gpzhu8/is_freedom_zero_such_hot_idea#c_w22bex">
+--                 link
+--               |
+                          
+--               <a .comment_replier tabindex="0" unselectable="on">
+--                 reply
+--               <span .reason>
+--             <div .comment_text>
+--               <blockquote>
+--                 <p>
+--                   buyers who otherwise would buy proprietary software.
+--               <p>
+--                 exactly, the freedom to study and share is a pre-sales experience.
+--         <div .comment_siblings_tree_line>
+--         <ol .comments>
+--       <li .comments_subtree>
+--         <input .comment_folder_button #comment_folder_jvag56 type="checkbox">
+--         <div .comment data-shortid="jvag56" #c_jvag56>
+--           <label .comment_folder for="comment_folder_jvag56">
+--           <div .voters>
+--             <a .upvoter>
+--             <div .score>
+--               ~
+--             <a .downvoter>
+--           <div .comment_parent_tree_line .can_downvote .score_shown>
+--           <div .details>
+--             <div .byline>
+--               <a name="c_jvag56">
+--               <label .comment_folder .comment_folder_inline for="comment_folder_jvag56">
+--               <a href="/u/hyperpape">
+--                 <img alt="hyperpape avatar" .avatar height="16" src="/avatars/hyperpape-16.png" srcset="/avatars/hyperpape-16.png 1x, /avatars/hyperpape-32.png 2x" width="16">
+--               <a href="/u/hyperpape">
+--                 hyperpape
+--               <span title="2018-07-25 07:33:58 -0500">
+--                 30 hours ago
+--               |
+                      
+--               <a href="https://lobste.rs/s/gpzhu8/is_freedom_zero_such_hot_idea#c_jvag56">
+--                 link
+--               |
+                          
+--               <a .comment_replier tabindex="0" unselectable="on">
+--                 reply
+--               <span .reason>
+--             <div .comment_text>
+--               <p>
+--                 A case where the government settled for $50 million is a bit ambiguous–they suffered a consequence for that theft. If this license led the military to make regular payouts for violating licenses, I would count that as a partial success.
+--         <div .comment_siblings_tree_line>
+--         <ol .comments>
+--           <li .comments_subtree>
+--             <input .comment_folder_button #comment_folder_8y6i2n type="checkbox">
+--             <div .comment data-shortid="8y6i2n" #c_8y6i2n>
+--               <label .comment_folder for="comment_folder_8y6i2n">
+--               <div .voters>
+--                 <a .upvoter>
+--                 <div .score>
+--                   ~
+--                 <a .downvoter>
+--               <div .comment_parent_tree_line .can_downvote .score_shown .no_children>
+--               <div .details>
+--                 <div .byline>
+--                   <a name="c_8y6i2n">
+--                   <label .comment_folder .comment_folder_inline for="comment_folder_8y6i2n">
+--                   <a href="/u/nickpsecurity">
+--                     <img alt="nickpsecurity avatar" .avatar height="16" src="/avatars/nickpsecurity-16.png" srcset="/avatars/nickpsecurity-16.png 1x, /avatars/nickpsecurity-32.png 2x" width="16">
+--                   <a href="/u/nickpsecurity">
+--                     nickpsecurity
+--                   <span title="2018-07-25 09:16:15 -0500">
+--                     28 hours ago
+--                   |
+                          
+--                   <a href="https://lobste.rs/s/gpzhu8/is_freedom_zero_such_hot_idea#c_8y6i2n">
+--                     link
+--                   |
+                              
+--                   <a .comment_replier tabindex="0" unselectable="on">
+--                     reply
+--                   <span .reason>
+--                 <div .comment_text>
+--                   <p>
+--                     That was a case where they got caught. Most acts of piracy don’t get caught. More likely in organizations where it’s illegal to even discuss what they’re doing.
+--             <div .comment_siblings_tree_line>
+--             <ol .comments>
+--   <li .comments_subtree>
+--     <input .comment_folder_button #comment_folder_4lxtvt type="checkbox">
+--     <div .comment data-shortid="4lxtvt" #c_4lxtvt>
+--       <label .comment_folder for="comment_folder_4lxtvt">
+--       <div .voters>
+--         <a .upvoter>
+--         <div .score>
+--           2
+--         <a .downvoter>
+--       <div .comment_parent_tree_line .can_downvote .score_shown>
+--       <div .details>
+--         <div .byline>
+--           <a name="c_4lxtvt">
+--           <label .comment_folder .comment_folder_inline for="comment_folder_4lxtvt">
+--           <a href="/u/Hail_Spacecake">
+--             <img alt="Hail_Spacecake avatar" .avatar height="16" src="/avatars/Hail_Spacecake-16.png" srcset="/avatars/Hail_Spacecake-16.png 1x, /avatars/Hail_Spacecake-32.png 2x" width="16">
+--           <a href="/u/Hail_Spacecake">
+--             Hail_Spacecake
+--           <span title="2018-07-24 20:59:47 -0500">
+--             41 hours ago
+--           |
+                  
+--           <a href="https://lobste.rs/s/gpzhu8/is_freedom_zero_such_hot_idea#c_4lxtvt">
+--             link
+--           |
+                      
+--           <a .comment_replier tabindex="0" unselectable="on">
+--             reply
+--           <span .reason>
+--         <div .comment_text>
+--           <p>
+--             Maybe free software licenses should have a provision explicitly barring people from using the software if they publicly advocate for licenses that try to prevent their political enemies from running a program as they wish for any purpose.
+--     <ol .comments>
+--       <li .comments_subtree>
+--         <input .comment_folder_button #comment_folder_7glydk type="checkbox">
+--         <div .comment data-shortid="7glydk" #c_7glydk>
+--           <label .comment_folder for="comment_folder_7glydk">
+--           <div .voters>
+--             <a .upvoter>
+--             <div .score>
+--               ~
+--             <a .downvoter>
+--           <div .comment_parent_tree_line .can_downvote .score_shown .no_children>
+--           <div .details>
+--             <div .byline>
+--               <a name="c_7glydk">
+--               <label .comment_folder .comment_folder_inline for="comment_folder_7glydk">
+--               <a href="/u/ssl">
+--                 <img alt="ssl avatar" .avatar height="16" src="/avatars/ssl-16.png" srcset="/avatars/ssl-16.png 1x, /avatars/ssl-32.png 2x" width="16">
+--               <a href="/u/ssl">
+--                 ssl
+--               <span title="2018-07-25 03:15:21 -0500">
+--                 34 hours ago
+--               |
+                      
+--               <a href="https://lobste.rs/s/gpzhu8/is_freedom_zero_such_hot_idea#c_7glydk">
+--                 link
+--               |
+                          
+--               <a .comment_replier tabindex="0" unselectable="on">
+--                 reply
+--               <span .reason>
+--             <div .comment_text>
+--               <p>
+--                 That would make the licence fault state trigger on itself.
+--         <div .comment_siblings_tree_line>
+--         <ol .comments>
+--   <li .comments_subtree>
+--     <input .comment_folder_button #comment_folder_le7krq type="checkbox">
+--     <div .comment data-shortid="le7krq" #c_le7krq>
+--       <label .comment_folder for="comment_folder_le7krq">
+--       <div .voters>
+--         <a .upvoter>
+--         <div .score>
+--           ~
+--         <a .downvoter>
+--       <div .comment_parent_tree_line .can_downvote .score_shown .no_children>
+--       <div .details>
+--         <div .byline>
+--           <a name="c_le7krq">
+--           <label .comment_folder .comment_folder_inline for="comment_folder_le7krq">
+--           <a href="/u/Shamar">
+--             <img alt="Shamar avatar" .avatar height="16" src="/avatars/Shamar-16.png" srcset="/avatars/Shamar-16.png 1x, /avatars/Shamar-32.png 2x" width="16">
+--           <a href="/u/Shamar">
+--             Shamar
+--           <span title="2018-07-26 03:35:44 -0500">
+--             10 hours ago
+--           |
+                  
+--           <a href="https://lobste.rs/s/gpzhu8/is_freedom_zero_such_hot_idea#c_le7krq">
+--             link
+--           |
+                      
+--           <a .comment_replier tabindex="0" unselectable="on">
+--             reply
+--           <span .reason>
+--         <div .comment_text>
+--           <p>
+--             Nice article. I think you should consider that Affero GPLv3 explicitly limits freedom zero.
+--           <blockquote>
+--             <p>
+--               I still think Free Software is better than closed proprietary software, but have come to believe that Free Software is the amoral option where what our field needs is morality.
+--           <p>
+--             It’s worth noticing that there is no “identity element” in morality. There’s no “zero”.
+--             <br>
+--             Amorality indeed is a pretty strong position: you subtract yourself from the burden of taking a position by accepting the responsibility of any outcome will happen.
+--     <ol .comments>
+--   <li .comments_subtree>
+--     <input .comment_folder_button #comment_folder_ewzo4f type="checkbox">
+--     <div .comment data-shortid="ewzo4f" #c_ewzo4f>
+--       <label .comment_folder for="comment_folder_ewzo4f">
+--       <div .voters>
+--         <a .upvoter>
+--         <div .score>
+--           1
+--         <a .downvoter>
+--       <div .comment_parent_tree_line .can_downvote .score_shown .no_children>
+--       <div .details>
+--         <div .byline>
+--           <a name="c_ewzo4f">
+--           <label .comment_folder .comment_folder_inline for="comment_folder_ewzo4f">
+--           <a href="/u/solidsnack">
+--             <img alt="solidsnack avatar" .avatar height="16" src="/avatars/solidsnack-16.png" srcset="/avatars/solidsnack-16.png 1x, /avatars/solidsnack-32.png 2x" width="16">
+--           <a href="/u/solidsnack">
+--             solidsnack
+--           <span title="2018-07-24 23:27:40 -0500">
+--             38 hours ago
+--           |
+                  
+--           <a href="https://lobste.rs/s/gpzhu8/is_freedom_zero_such_hot_idea#c_ewzo4f">
+--             link
+--           |
+                      
+--           <a .comment_replier tabindex="0" unselectable="on">
+--             reply
+--           <span .reason>
+--         <div .comment_text>
+--           <p>
+--             This seems to be based on the idea, that one has an absolute right to license one’s creation as one sees fit. This implies a kind of individual sovereignty, but there is no basis for that in the law of any nation. The government can seize anything it wants, with sound justification. Economic development is sound enough – witness eminent domain. National defense has led to substantial seizures in the past, and not unlawfully, because the conduct of war abuts the outer edges of the legal system and in a very real sense takes precedence over it.
+--     <ol .comments>
+--   <li .comments_subtree>
+--     <input .comment_folder_button #comment_folder_qhme1u type="checkbox">
+--     <div .comment data-shortid="qhme1u" #c_qhme1u>
+--       <label .comment_folder for="comment_folder_qhme1u">
+--       <div .voters>
+--         <a .upvoter>
+--         <div .score>
+--           ~
+--         <a .downvoter>
+--       <div .comment_parent_tree_line .can_downvote .score_shown .no_children>
+--       <div .details>
+--         <div .byline>
+--           <a name="c_qhme1u">
+--           <label .comment_folder .comment_folder_inline for="comment_folder_qhme1u">
+--           <a href="/u/lambdax">
+--             <img alt="lambdax avatar" .avatar height="16" src="/avatars/lambdax-16.png" srcset="/avatars/lambdax-16.png 1x, /avatars/lambdax-32.png 2x" width="16">
+--           <a href="/u/lambdax">
+--             lambdax
+--           <span title="2018-07-25 04:34:43 -0500">
+--             33 hours ago
+--           |
+                  
+--           <a href="https://lobste.rs/s/gpzhu8/is_freedom_zero_such_hot_idea#c_qhme1u">
+--             link
+--           |
+                      
+--           <a .comment_replier tabindex="0" unselectable="on">
+--             reply
+--           <span .reason>
+--         <div .comment_text>
+--           <p>
+--             My criticism of Stallman, think it was posted here before: 
+--             <a href="http://flowing.systems/2016/09/24/a-short-critique-of-stallmanism/" rel="nofollow">
+--               http://flowing.systems/2016/09/24/a-short-critique-of-stallmanism/
+--     <ol .comments>
+-- |]
