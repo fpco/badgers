@@ -8,6 +8,7 @@ import Database.Esqueleto
 import Data.Maybe (maybeToList)
 
 import Helpers.Views
+import Handler.Comment.Query
 import Model
 
 storyLiner :: Widget
@@ -30,35 +31,35 @@ storyLiner = [whamlet|
       <a href="/u/leeg">
         <img alt="leeg avatar" .avatar height="16" src="/avatars/leeg-16.png" srcset="/avatars/leeg-16.png 1x, /avatars/leeg-32.png 2x" width="16">
       authored by
-              
+
       <a .user_is_author href="/u/leeg">
         leeg
       <span title="2018-07-24 13:17:39 -0500">
         2 days ago
-      | 
+      |
       <a .suggester href="/stories/gpzhu8/suggest">
         suggest
-      | 
+      |
       <a .flagger>
         flag
-      | 
+      |
       <a .hider href="/stories/gpzhu8/hide">
         hide
       (hidden by 6 users)
-                  | 
+                  |
       <a .saver href="/stories/gpzhu8/save">
         save
       |
-                
+
       <a href="https://archive.is/https%3A%2F%2Fwww.sicpers.info%2F2018%2F07%2Fis-freedom-zero-such-a-hot-idea%2F" rel="nofollow" target="_blank">
         cached
       <span .comments_label>
         |
-                    
+
         <a href="/s/gpzhu8/is_freedom_zero_such_hot_idea">
           27
                           comments
-                      
+
       | +23, -1 off-topic, -3 spam
 |]
 
@@ -77,10 +78,10 @@ postTopLevelComment = [whamlet|
           <div .markdown_help_toggler>
             <div .markdown_help_label>
               Markdown formatting available
-                      
+
             <div .markdown_help_label .markdown_help_label_mobile style="display: none;">
               [M↓]
-                      
+
             <input .comment-post data-disable-with="Post" name="commit" type="submit" value="Post">
             <button .comment-preview name="button" type="button">
               Preview
@@ -93,7 +94,7 @@ postTopLevelComment = [whamlet|
                       <em>
                         emphasized text
                     <td>
-                      surround text with 
+                      surround text with
                       <tt>
                         *asterisks*
                   <tr>
@@ -101,7 +102,7 @@ postTopLevelComment = [whamlet|
                       <strong>
                         strong text
                     <td>
-                      surround text with 
+                      surround text with
                       <tt>
                         **two asterisks**
                   <tr>
@@ -109,7 +110,7 @@ postTopLevelComment = [whamlet|
                       <strike>
                         struck-through
                     <td>
-                      surround text with 
+                      surround text with
                       <tt>
                         ~~two tilde characters~~
                   <tr>
@@ -117,7 +118,7 @@ postTopLevelComment = [whamlet|
                       <tt>
                         fixed width
                     <td>
-                      surround text with 
+                      surround text with
                       <tt>
                         `backticks`
                   <tr>
@@ -134,7 +135,7 @@ postTopLevelComment = [whamlet|
                       <blockquote>
                         quoted text
                     <td>
-                      prefix text with 
+                      prefix text with
                       <tt>
                         >
                   <tr>
@@ -153,16 +154,15 @@ postTopLevelComment = [whamlet|
 
 renderCommentSubtree :: Entity Story
                      -> Entity User
-                     -> Entity Comment
-                     -> [Entity Comment]
+                     -> RoseTree (Entity Comment)
                      -> Widget
-renderCommentSubtree story user comment comments = [whamlet|
+renderCommentSubtree story user (RoseTree comment childTrees) = [whamlet|
 <li .comments_subtree>
   <input .comment_folder_button #comment_folder_trz9yd type="checkbox">
   ^{renderComment story user comment}
   <ol .comments>
-  $forall subComment <- comments
-    ^{renderCommentSubtree story user subComment undefined}
+    $forall childTree <- childTrees
+      ^{renderCommentSubtree story user childTree}
 |]
 
 renderComment :: Entity Story -> Entity User -> Entity Comment -> Widget
@@ -205,4 +205,3 @@ renderComment (Entity _ Story{..}) (Entity _ User{..}) (Entity commentK Comment{
       <pre>
         #{commentComment}
 |]
-
