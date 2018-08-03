@@ -5,7 +5,6 @@ module Handler.Comment.Query where
 import Import
 
 import qualified Data.Map as Map
-import Data.Maybe (fromJust)
 import Data.Time.Clock
 import Database.Esqueleto hiding ((==.), selectFirst)
 import qualified Database.Persist as P
@@ -42,9 +41,39 @@ mkCommentTree' commentMap rootComment@(Entity commentKey _) =
   where
     childComments = fromMaybe [] $ commentMap Map.!? Just commentKey
 
+data GetStoryCommentsException =
+  CouldntFindStoryByShortId Text
+  deriving (Eq, Show)
+
+instance Exception GetStoryCommentsException
+
+justOrThrowIO :: (Exception e, MonadIO m) => e -> m (Maybe a) -> m a
+justOrThrowIO e ma = do
+  aM <- ma
+  case aM of
+    Nothing -> throwIO e
+    (Just a) -> return a
+
+rightOrThrowIO :: (Exception e, MonadIO m) => m (Either e a) -> m a
+rightOrThrowIO ma = do
+  aM <- ma
+  case aM of
+    (Left e) -> throwIO e
+    (Right a) -> return a
+
 getStoryAndCommentTree :: Text -> DB StoryComments
-getStoryAndCommentTree shortCode = do
-  story <- fromJust <$> P.selectFirst [StoryShortId ==. shortCode] [] :: DB (Entity Story)
-  comments <- selectList [CommentStory ==. entityKey story ] [] :: DB [Entity Comment]
-  let tree = mkCommentTree . mkCommentMap $ comments
-  return (story, tree)
+getStoryAndCommentTree shortCode =
+  rightOrThrowIO $ getStoryAndCommentTreeE shortCode
+
+getStoryAndCommentTreeE :: Text -> DB (Either GetStoryCommentsException StoryComments)
+getStoryAndCommentTreeE shortCode = do
+  storyM <-
+    P.selectFirst [StoryShortId ==. shortCode] []
+  case storyM of
+    Nothing -> return $ Left $ CouldntFindStoryByShortId shortCode
+    (Just story) -> do
+      comments <- selectList [CommentStory ==. entityKey story ] []
+      let tree = mkCommentTree . mkCommentMap $ comments
+      return $ Right (story, tree)
+      where couldntFind =
+              CouldntFindStoryByShortId shortCode
